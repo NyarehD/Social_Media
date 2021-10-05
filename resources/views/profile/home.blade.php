@@ -1,18 +1,25 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="card mb-3" style="max-width: 80%">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="{{ asset("storage/profile-picture/".Auth::user()->profile_picture) }}"
-                             class="img-fluid rounded-start" alt="...">
+                        <img src="{{ isset(Auth::user()->profile_picture)?asset("storage/profile-picture/".Auth::user()->profile_picture): asset("storage/profile-picture/user-default-photo.png") }}"
+                             class="img-fluid rounded-start" alt="..." id="profile-img">
                         <div class="">
                             <a id="profile-upload" class="btn btn-primary w-100"><i class="fas fa-edit"></i> Change
                                 Profile
                                 Picture</a>
+                            @error("profile-photo")
+                            {{ $message }}
+                            @enderror
                         </div>
+                        <form action="{{ route("profile-picture-update") }}" class="d-none" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input type="file" name="profile-photo" id="file-upload-button">
+                            <button type="submit" id="profileUploadBut"></button>
+                        </form>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body d-flex justify-content-between flex-column h-100 pb-0">
@@ -45,7 +52,6 @@
         </div>
     </div>
 @endsection
-
 @section("script")
     <script>
         let but = document.getElementById("profile-upload");
@@ -55,6 +61,7 @@
            fileUpload.click()
         })
         fileUpload.addEventListener("change",function (event) {
+            event.preventDefault();
             document.getElementById("profileUploadBut").click();
         })
     </script>

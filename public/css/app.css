@@ -15549,3 +15549,8 @@ a.text-dark:focus {
   }
 }
 
+#profile-img {
+  width: 600px !important;
+  height: 300px;
+}
+
