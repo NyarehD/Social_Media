@@ -11,9 +11,17 @@
                                 src="{{ isset(Auth::user()->profile_picture)?asset("storage/profile-picture/".Auth::user()->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
                                 class="img-fluid rounded-start" alt="..." id="profile-img">
                             <div class="">
-                                <a id="profile-upload" class="btn btn-primary w-100"><i class="fas fa-edit"></i> Change
+                                <button id="profile-picture-button" class="btn btn-primary w-100"><i
+                                        class="fas fa-edit"></i>
+                                    Change
                                     Profile
-                                    Picture</a>
+                                    Picture
+                                </button>
+                                <form action="{{ route("profile.pictureUpdate") }}" id="profile-picture-form" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="file" name="profile_picture" id="profile-picture-input" class="d-none">
+                                </form>
+
                                 @error("profile-photo")
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -25,7 +33,7 @@
                                     <form action="{{ route("profile.update") }}" class="" method="post"
                                           enctype="multipart/form-data">
                                         @csrf
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="d-flex justify-content-between align-items-start h-40px">
                                             <label for="email" class="h4">Name</label>
                                             <div class="w-75">
                                                 <input type="text"
@@ -38,7 +46,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="d-flex justify-content-between align-items-start h-40px">
                                             <label for="email" class="h4">Email</label>
                                             <div class="w-75">
                                                 <input type="text"
@@ -51,7 +59,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="">
+                                        <div style="height: 160px">
+                                            <label for="bio" class="h4">Bio</label>
                                             <textarea name="bio" id="bio" cols="30" rows="4"
                                                       class="form-control mb-2">{{ old("bio") ? old("bio") : ( Auth::user()->bio ? Auth::user()->bio: "Add your bio here ...") }}
                                             </textarea>
@@ -72,14 +81,15 @@
 @endsection
 @section("script")
     <script>
-        let fileUpload = $("#file-upload-button");
-        $("#profile-upload").on("click", function (event) {
-            event.preventDefault();
-            fileUpload.click()
-        })
-        fileUpload.on("change", function (event) {
-            event.preventDefault();
-            document.getElementById("profileUploadBut").click();
+        $("document").ready(function () {
+            $("#profile-picture-button").on("click", function (event) {
+                event.preventDefault();
+                $("#profile-picture-input").click();
+            })
+            $("#profile-picture-input").on("change", function (event) {
+                event.preventDefault();
+                $("#profile-picture-form").submit();
+            })
         })
     </script>
 @endsection

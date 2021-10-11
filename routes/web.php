@@ -24,4 +24,5 @@ Route::prefix("/profile")->group(function(){
     Route::get('/', "ProfileController@index")->name("profile");
     Route::view("/edit", "profile.edit")->name("profile.edit");
     Route::post("/edit", "ProfileController@profileUpdate")->name("profile.update");
+    Route::post("/edit/profile-picture","ProfileController@profilePictureUpdate")->name("profile.pictureUpdate");
 });

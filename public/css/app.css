@@ -15553,3 +15553,7 @@ a.text-dark:focus {
   width: 600px !important;
 }
 
+.h-40px {
+  height: 60px;
+}
+

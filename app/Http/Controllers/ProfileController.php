@@ -17,20 +17,20 @@ class ProfileController extends Controller
 
     public function profilePictureUpdate(Request $request){
         $request->validate([
-            "profile-photo" => "required|mimetypes:image/jpeg,image/png|file|max:2500|dimensions:ratio=1/1"
+            "profile_picture" => "required|mimetypes:image/jpeg,image/png|file|max:2500|dimensions:ratio=1/1"
         ]);
         $dir = "public/profile-picture/";
 
         Storage::delete($dir . Auth::user()->profile_picture);
 
-        $newName = uniqid() . "_profile-picture." . $request->file("profile-photo")->getClientOriginalExtension();
-        $request->file("profile-photo")->storeAs($dir, $newName);
+        $newName = uniqid() . "_profile-picture." . $request->file("profile_picture")->getClientOriginalExtension();
+        $request->file("profile_picture")->storeAs($dir, $newName);
 
         $user = User::find(Auth::id());
         $user->profile_picture = $newName;
         $user->update();
 
-        return redirect()->route("profile");
+        return redirect()->route("profile.edit");
     }
 
 
