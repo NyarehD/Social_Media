@@ -13,11 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function(){
     return view('welcome');
 });
 
 Auth::routes();
 
-Route::get('/profile',"ProfileController@index")->name("profile");
-Route::post("/profile","ProfileController@profilePictureUpdate")->name("profile-picture-update");
+// Profile
+Route::prefix("/profile")->group(function(){
+    Route::get('/', "ProfileController@index")->name("profile");
+    Route::view("/edit", "profile.edit")->name("profile.edit");
+    Route::post("/edit", "ProfileController@profileUpdate")->name("profile.update");
+});
