@@ -15549,11 +15549,20 @@ a.text-dark:focus {
   }
 }
 
+#logo {
+  width: 40px;
+}
+
+#profile-img-in-nav {
+  width: 40px;
+  border-radius: 50%;
+}
+
 #profile-img {
   width: 600px !important;
 }
 
-.h-40px {
+.h-60 {
   height: 60px;
 }
 

@@ -12,7 +12,7 @@ class ProfileController extends Controller
 {
     public function index(){
         $user = Auth::user();
-        return view('profile.home', compact("user"));
+        return view('profile.profile', compact("user"));
     }
 
     public function profilePictureUpdate(Request $request){

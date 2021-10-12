@@ -33,7 +33,7 @@
                                     <form action="{{ route("profile.update") }}" class="" method="post"
                                           enctype="multipart/form-data">
                                         @csrf
-                                        <div class="d-flex justify-content-between align-items-start h-40px">
+                                        <div class="d-flex justify-content-between align-items-start h-60">
                                             <label for="email" class="h4">Name</label>
                                             <div class="w-75">
                                                 <input type="text"
@@ -46,7 +46,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-flex justify-content-between align-items-start h-40px">
+                                        <div class="d-flex justify-content-between align-items-start h-60">
                                             <label for="email" class="h4">Email</label>
                                             <div class="w-75">
                                                 <input type="text"
@@ -68,7 +68,10 @@
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <button class="btn btn-primary float-right">Update</button>
+                                       <div class="d-flex justify-content-end">
+                                           <a href="{{ route('profile') }}" class="btn btn-outline-secondary mr-2">Back</a>
+                                           <button class="btn btn-primary ">Update</button>
+                                       </div>
                                     </form>
                                 </div>
                             </div>
