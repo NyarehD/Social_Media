@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function(){
-    return view('newsfeed');
-})->name("newsfeed");
+Route::get('/', "PostController@index")->name("newsfeed");
 
 Auth::routes();
 

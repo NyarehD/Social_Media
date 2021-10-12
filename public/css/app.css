@@ -15566,3 +15566,12 @@ a.text-dark:focus {
   height: 60px;
 }
 
+.post .post-profile-img {
+  display: block;
+  max-width: 70px;
+  max-height: 70px;
+  width: auto;
+  height: auto;
+  border-radius: 50%;
+}
+

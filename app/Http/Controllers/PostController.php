@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function index(){
+        return view("newsfeed", [
+            "posts" => Post::all()
+        ])->with("images");
     }
 
     public function create(){
@@ -44,7 +47,7 @@ class PostController extends Controller
                 $postPhoto->save();
             }
         }
-        return Post::all();
+        return redirect()->route("newsfeed");
     }
 
     public function show(Post $post){
