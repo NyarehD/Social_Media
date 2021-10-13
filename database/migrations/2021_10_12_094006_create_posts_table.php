@@ -11,7 +11,7 @@ class CreatePostsTable extends Migration
             $table->bigIncrements('id');
             $table->text("title");
             $table->longText("description");
-            $table->bigInteger("user_id");
+            $table->foreignId("user_id")->constrained();
             $table->integer("likes")->default(0);
             $table->timestamps();
         });

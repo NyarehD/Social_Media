@@ -4,13 +4,15 @@
         <div class="row justify-content-center">
             <div class="col-8">
                 <div class="card mb-3 p-3">
-                    <form action="{{ route('post.store') }}" class="" enctype="multipart/form-data" method="post">
+                    <form action="{{ route('post.update',$post->id) }}" class="" enctype="multipart/form-data"
+                          method="post">
                         @csrf
-                        <h3 class="card-title text-center text-primary font-weight-bold">Add Post</h3>
+                        @method("put")
+                        <h3 class="card-title text-center text-primary font-weight-bold">Edit Post</h3>
                         <div class="mb-2">
                             <label for="title" class="h3">Title</label>
                             <input type="text" id="title" class="form-control @error("title") is-invalid @enderror"
-                                   name="title" value="{{ old("title") }}">
+                                   name="title" value="{{ (old("title"))?old("title"):$post->title }}">
                             @error("title")
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -18,7 +20,7 @@
                         <div class="mb-2">
                             <label for="description" class="h3">Description</label>
                             <textarea name="description" id="description" cols="30" rows="10"
-                                      class="form-control @error("title") is-invalid @enderror">{{ old("description") }}</textarea>
+                                      class="form-control @error("title") is-invalid @enderror">{{ (old("description"))?old("description"):$post->description }}</textarea>
                             @error("description")
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -31,7 +33,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add Post
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>Edit Post
                             </button>
                         </div>
                     </form>

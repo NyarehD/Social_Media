@@ -4,8 +4,7 @@
         <div class="row">
             <div class="col-8">
                 @foreach($posts as $post)
-                    <x-post name="{{ $post->name }}" time="{{ Auth::user()->created_at->diffForHumans() }}"
-                            post-img-src="{{ asset('storage/post/'.$post->images[0]->filename) }}"></x-post>
+                   <x-post :post="$post"></x-post>
                 @endforeach
             </div>
             <div class="col-4">
