@@ -1,5 +1,5 @@
 <div class="card post mb-3">
-{{--    {{ dd($post->totalLikes->where("user_id",Auth::id())->count()==0) }}--}}
+    {{--    {{ dd($post->totalLikes->where("user_id",Auth::id())->count()==0) }}--}}
 
     <div class="card-body py-1">
         <div class="row justify-content-between align-items-center">
@@ -40,7 +40,12 @@
                 @error("post_id")
                 {{ $message }}
                 @enderror
-                <form action="{{ route("post.like") }}" id="like{{$post->id}}" method="post">
+                @error("user_id")
+                {{$message}}
+                @enderror
+                <form
+                    action="{{ $post->totalLikes->where("user_id",Auth::id())->count()==1?route("like.unlike"):route("like.like") }}"
+                    id="like{{$post->id}}" method="post">
                     @csrf
                     <input type="text" name="post_id" value="{{ $post->id }}" class="d-none">
                     <input type="text" class="d-none" name="user_id" value="{{ Auth::id() }}">

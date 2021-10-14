@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LikesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,8 @@ Route::middleware("auth")->group(function(){
     // Post
     Route::resource("/post", "PostController");
     // Post like
-   Route::post("/like","LikesController@like")->name("post.like");
+    Route::post("/like", [LikesController::class, "like"])->name("like.like");
+    Route::post("/unlike", [LikesController::class, "unlike"])->name("like.unlike");
 
     Route::prefix("/profile")->group(function(){
         Route::get('/', "ProfileController@index")->name("profile");
