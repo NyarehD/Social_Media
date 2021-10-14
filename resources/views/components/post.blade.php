@@ -44,7 +44,7 @@
                 {{$message}}
                 @enderror
                 <form
-                    action="{{ $post->totalLikes->where("user_id",Auth::id())->count()==1?route("like.unlike"):route("like.like") }}"
+                    action="{{ $post->totalLikes->where("user_id",Auth::id())->count()==1?route("like.unlike",$post->id):route("like.like") }}"
                     id="like{{$post->id}}" method="post">
                     @csrf
                     <input type="text" name="post_id" value="{{ $post->id }}" class="d-none">

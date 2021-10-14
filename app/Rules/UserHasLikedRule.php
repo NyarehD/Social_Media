@@ -13,7 +13,7 @@ class UserHasLikedRule implements Rule
     }
 
     public function passes($attribute, $value): bool{
-        if (Like::where("user_id", Auth::id())->count() == 1) {
+        if (Like::where("user_id", $value)->count() == 1) {
             return true;
         }
         return false;
