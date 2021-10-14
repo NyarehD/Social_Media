@@ -15,7 +15,7 @@ class PostController extends Controller
     public function index(){
         return view("newsfeed", [
             "posts" => Post::all(),
-        ])->with(["images", "post_owner"]);
+        ])->with(["images", "post_owner","postLikes"]);
     }
 
     public function create(){

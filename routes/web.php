@@ -18,10 +18,18 @@ Route::get('/', "PostController@index")->name("newsfeed");
 Auth::routes();
 
 // Profile
-Route::resource("/post", "PostController")->middleware("auth");
-Route::prefix("/profile")->group(function(){
-    Route::get('/', "ProfileController@index")->name("profile");
-    Route::view("/edit", "profile.edit")->name("profile.edit");
-    Route::post("/edit", "ProfileController@profileUpdate")->name("profile.update");
-    Route::post("/edit/profile-picture", "ProfileController@profilePictureUpdate")->name("profile.pictureUpdate");
+
+Route::middleware("auth")->group(function(){
+    // Post
+    Route::resource("/post", "PostController");
+    // Post like
+   Route::post("/like","LikesController@like")->name("post.like");
+
+    Route::prefix("/profile")->group(function(){
+        Route::get('/', "ProfileController@index")->name("profile");
+        Route::view("/edit", "profile.edit")->name("profile.edit");
+        Route::post("/edit", "ProfileController@profileUpdate")->name("profile.update");
+        Route::post("/edit/profile-picture", "ProfileController@profilePictureUpdate")->name("profile.pictureUpdate");
+    });
+
 });

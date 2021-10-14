@@ -11,6 +11,10 @@ class Post extends Model
     }
 
     public function post_owner(){
-        return $this->belongsTo(User::class,"user_id");
+        return $this->belongsTo(User::class, "user_id");
+    }
+
+    public function totalLikes(){
+       return $this->hasMany(Like::class,"post_id");
     }
 }

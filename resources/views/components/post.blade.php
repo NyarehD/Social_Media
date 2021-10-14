@@ -1,4 +1,5 @@
 <div class="card post mb-3">
+{{--    {{ dd($post->totalLikes->where("user_id",Auth::id())->count()==0) }}--}}
 
     <div class="card-body py-1">
         <div class="row justify-content-between align-items-center">
@@ -29,16 +30,31 @@
         <p>{{ $post->description }}</p>
     </div>
     <img class="card-img-top" src="{{ "storage/post/".$post->images[0]->filename }}" alt="Card image cap">
-    <div class="card-body">
+    <div class="p-2 card-body">
         <div class="row justify-content-between align-items-center">
             <div class="col-4 text-center">
-                <i class="far fa-lg fa-thumbs-up"></i> Likes
+                <button class="btn w-100" form="like{{ $post->id }}">
+                    <i class="fa-lg {{ $post->totalLikes->where("user_id",Auth::id())->count()==1?"fas":"far" }} fa-thumbs-up"></i>{{ $post->totalLikes->count() }}
+                    Likes
+                </button>
+                @error("post_id")
+                {{ $message }}
+                @enderror
+                <form action="{{ route("post.like") }}" id="like{{$post->id}}" method="post">
+                    @csrf
+                    <input type="text" name="post_id" value="{{ $post->id }}" class="d-none">
+                    <input type="text" class="d-none" name="user_id" value="{{ Auth::id() }}">
+                </form>
             </div>
             <div class="col-4 text-center">
-                <i class="far fa-lg fa-comment-alt"></i> Comment
+                <button class="btn w-100">
+                    <i class="far fa-lg fa-comment-alt"></i> Comment
+                </button>
             </div>
             <div class="col-4 text-center">
-                <i class="fas fa-lg fa-share"></i> Share
+                <button class="btn w-100">
+                    <i class="fas fa-lg fa-share"></i> Share
+                </button>
             </div>
         </div>
     </div>
