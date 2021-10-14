@@ -13,13 +13,13 @@ class UserHasNotLikedRule implements Rule
     }
 
     public function passes($attribute, $value): bool{
-        if (Like::where("user_id", $value)->count() == 0) {
+        if (Like::where("user_id", Auth::id())->where("post_id", $value)->count() == 0) {
             return true;
         }
         return false;
     }
 
     public function message(): string{
-        return 'You haven\'t liked current post.';
+        return 'You have already liked the post';
     }
 }
