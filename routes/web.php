@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LikesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,11 +14,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', "PostController@index")->name("newsfeed");
 
 Auth::routes();
 
-Route::get('/profile',"ProfileController@index")->name("profile");
-Route::post("/profile","ProfileController@profilePictureUpdate")->name("profile-picture-update");
+// Profile
+
+Route::middleware("auth")->group(function(){
+    // Post
+    Route::resource("/post", "PostController");
+    // Post like
+    Route::post("/like", [LikesController::class, "like"])->name("like.like");
+    Route::post("/unlike", [LikesController::class, "unlike"])->name("like.unlike");
+
+    Route::prefix("/profile")->group(function(){
+        Route::get('/', "ProfileController@index")->name("profile");
+        Route::view("/edit", "profile.edit")->name("profile.edit");
+        Route::post("/edit", "ProfileController@profileUpdate")->name("profile.update");
+        Route::post("/edit/profile-picture", "ProfileController@profilePictureUpdate")->name("profile.pictureUpdate");
+    });
+
+});

@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Post;
+use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
@@ -21,10 +24,14 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot(){
         $this->registerPolicies();
-
+        Gate::define("post_owner", function($user, $post){
+            if (Auth::id() == $post->user_id && $user->id == $post->user_id) {
+                return true;
+            }
+            return false;
+        });
         //
     }
 }
