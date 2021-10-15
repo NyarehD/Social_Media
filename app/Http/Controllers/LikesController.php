@@ -16,22 +16,20 @@ class LikesController extends Controller
 {
     public function like(Request $request){
         $request->validate([
-            "user_id" => [new UserIdSameAuthIdRule()],
             "post_id" => [new PostExistsRule(), new UserHasNotLikedRule()],
         ]);
         $like = new Like();
         $like->post_id = $request->post_id;
-        $like->user_id = $request->user_id;
+        $like->user_id = Auth::id();
         $like->save();
         return redirect()->back();
     }
 
     public function unlike(Request $request){
         $request->validate([
-            "user_id" => [new UserIdSameAuthIdRule()],
             "post_id" => [new PostExistsRule(), new UserHasLikedRule()],
         ]);
-        Like::where("user_id", $request->user_id)->delete();
+        Like::where("user_id", Auth::id())->delete();
         return redirect()->back();
     }
 }

@@ -80,8 +80,14 @@
 
     <main class="py-4">
         @yield('content')
+
     </main>
 </div>
 @yield("script")
+<script>
+    $(document).ready(function () {
+        $(".toast").toast("show")
+    })
+</script>
 </body>
 </html>

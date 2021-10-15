@@ -15575,3 +15575,13 @@ a.text-dark:focus {
   border-radius: 50%;
 }
 
+.postIdToast {
+  position: fixed;
+  bottom: 2vw;
+  right: 2vw;
+}
+
+.postIdToast img {
+  width: 100%;
+}
+

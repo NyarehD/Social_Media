@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-8">
                 @foreach($posts as $post)
-                   <x-post :post="$post"></x-post>
+                    <x-post :post="$post"></x-post>
                 @endforeach
             </div>
             <div class="col-4">
@@ -12,4 +12,13 @@
             </div>
         </div>
     </div>
+
+@endsection
+@section("script")
+    <script>
+        $(document).ready(function () {
+            $(".toast").toast("show")
+        })
+    </script>
+
 @endsection

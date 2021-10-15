@@ -16,6 +16,6 @@ class PostExistsRule implements Rule
     }
 
     public function message(): string{
-        return 'The post do not exist anymore.';
+        return 'The post do not exist.';
     }
 }

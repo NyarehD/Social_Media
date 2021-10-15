@@ -38,3 +38,14 @@
         border-radius: 50%;
     }
 }
+
+// Toast for error message
+.postIdToast {
+    position: fixed;
+    bottom: 2vw;
+    right: 2vw;
+
+    img {
+        width: 100%;
+    }
+}

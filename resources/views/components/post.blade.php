@@ -38,17 +38,22 @@
                     Likes
                 </button>
                 @error("post_id")
-                {{ $message }}
+                <div role="alert" aria-live="assertive" aria-atomic="true" class="toast postIdToast"
+                     data-autohide="false">
+                    <div class="toast-header">
+                        <strong>{{ $message }}</strong>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
                 @enderror
-                @error("user_id")
-                {{$message}}
-                @enderror
+
                 <form
                     action="{{ $post->totalLikes->where("user_id",Auth::id())->count()==1?route("like.unlike",$post->id):route("like.like") }}"
                     id="like{{$post->id}}" method="post">
                     @csrf
-                    <input type="text" name="post_id" value="{{ $post->id }}" class="d-none">
-                    <input type="text" class="d-none" name="user_id" value="{{ Auth::id() }}">
+                    <input type="text" name="post_id" value="{{ $post->id  }}" class="d-none">
                 </form>
             </div>
             <div class="col-4 text-center">
