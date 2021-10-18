@@ -15862,21 +15862,30 @@ a.text-dark:focus {
 
 .post .post-carousel .slick-prev,
 .post .post-carousel .slick-next {
-  z-index: 100;
+    z-index: 100;
 }
 
 .post .post-carousel .slick-prev.slick-disabled:before,
 .post .post-carousel .slick-next.slick-disabled:before {
-  display: none;
+    display: none;
+}
+
+.post .post-carousel div img {
+    width: 100%;
+    height: 400px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: 50% 50%;
+    object-position: 50% 50%;
 }
 
 .postIdToast {
-  position: fixed;
-  bottom: 2vw;
-  right: 2vw;
+    position: fixed;
+    bottom: 2vw;
+    right: 2vw;
 }
 
 .postIdToast img {
-  width: 100%;
+    width: 100%;
 }
 

@@ -26,7 +26,6 @@
                 dots: true,
                 infinite: false,
                 left: true,
-                adaptiveHeight: true
             })
         })
     </script>
