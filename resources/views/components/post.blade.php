@@ -34,7 +34,9 @@
     @else
         <div class="post-carousel">
             @foreach($post->images as $image)
-                <img class="card-img-top" src="{{ "storage/post/".$image->filename }}" alt="Card image cap">
+                <div class="">
+                    <img class="card-img" src="{{ "storage/post/".$image->filename }}" alt="Card image cap">
+                </div>
             @endforeach
         </div>
         <ul class="slick-dots"></ul>

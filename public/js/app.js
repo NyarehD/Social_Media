@@ -37245,15 +37245,16 @@ process.argv = [];
 process.version = ''; // empty string to avoid regexp issues
 process.versions = {};
 
-function noop() {}
+            function noop() {
+            }
 
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
+            process.on = noop;
+            process.addListener = noop;
+            process.once = noop;
+            process.off = noop;
+            process.removeListener = noop;
+            process.removeAllListeners = noop;
+            process.emit = noop;
             process.prependListener = noop;
             process.prependOnceListener = noop;
 
@@ -37869,11 +37870,11 @@ process.emit = noop;
 
             try {
                 // This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
+                g = g || new Function("return this")();
+            } catch (e) {
+                // This works if the window reference is available
+                if (typeof window === "object") g = window;
+            }
 
 // g can still be undefined, but nothing to do about it...
 // We return undefined, instead of nothing here, so it's
@@ -37953,8 +37954,9 @@ module.exports = function(module) {
                 __webpack_require__(/*! slick-carousel/slick/slick.min */ "./node_modules/slick-carousel/slick/slick.min.js");
 
                 __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
-            } catch (e) {}
-/**
+            } catch (e) {
+            }
+            /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.

@@ -59,6 +59,15 @@
         .slick-prev.slick-disabled:before, .slick-next.slick-disabled:before {
             display: none;
         }
+
+        div {
+            img {
+                width: 100%;
+                height: 400px;
+                object-fit: cover;
+                object-position: 50% 50%;
+            }
+        }
     }
 }
 
