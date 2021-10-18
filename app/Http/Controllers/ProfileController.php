@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
@@ -12,7 +13,11 @@ class ProfileController extends Controller
 {
     public function index(){
         $user = Auth::user();
-        return view('profile.profile', compact("user"));
+        $post_by_user = Post::where("user_id", Auth::id())->when(request()->search, function($query){
+            $search_key = request()->search;
+            return $query->where("title", "LIKE", "%$search_key%")->orWhere("description", "LIKE", "%$search_key%");
+        })->get();
+        return view('profile.profile', compact("user", "post_by_user"));
     }
 
     public function profilePictureUpdate(Request $request){
@@ -47,4 +52,5 @@ class ProfileController extends Controller
         $user->update();
         return redirect()->route("profile");
     }
+
 }
