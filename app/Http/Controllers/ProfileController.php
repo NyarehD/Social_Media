@@ -17,7 +17,7 @@ class ProfileController extends Controller
             $search_key = request()->search;
             return $query->where("title", "LIKE", "%$search_key%")->orWhere("description", "LIKE", "%$search_key%");
         })->get();
-        return view('profile.profile', compact("user", "post_by_user"));
+        return view('profile.index', compact("user", "post_by_user"));
     }
 
     public function profilePictureUpdate(Request $request){

@@ -1,11 +1,11 @@
 <div class="card post mb-3">
-    {{--    {{ dd($post->totalLikes->where("user_id",Auth::id())->count()==0) }}--}}
-
     <div class="card-body py-1">
         <div class="row justify-content-between align-items-center">
             <div class="col-4 d-flex align-items-center">
-                <img src="{{ asset("storage/profile-picture/default-profile.jpg") }}" alt=""
-                     class="post-profile-img h-100">
+                <img
+                    src="{{ isset($post->post_owner->profile_picture)?asset("storage/profile-picture/".$post->post_owner->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
+                    alt=""
+                    class="post-profile-img h-100">
                 <div class="">
                     <h4 class="mb-0">{{ $post->post_owner->name  }}</h4>
                     <h6>{{ $post->created_at->diffForHumans() }}</h6>
@@ -34,8 +34,8 @@
         <div class="row justify-content-between align-items-center">
             <div class="col-4 text-center">
                 <button class="btn w-100" form="like{{ $post->id }}">
-                    <i class="fa-lg {{ $post->totalLikes->where("user_id",Auth::id())->count()==1?"fas":"far" }} fa-thumbs-up"></i>{{ $post->totalLikes->count() }}
-                    Likes
+                    <i class="fa-lg {{ $post->total_likes->count()==1?"fas":"far" }} fa-thumbs-up"></i>{{ $post->total_likes->count() }}
+                    {{ $post->total_likes->count()>1?"Likes":"Like" }}
                 </button>
                 @error("post_id")
                 <div role="alert" aria-live="assertive" aria-atomic="true" class="toast postIdToast"
@@ -50,7 +50,7 @@
                 @enderror
 
                 <form
-                    action="{{ $post->totalLikes->where("user_id",Auth::id())->count()==1?route("like.unlike",$post->id):route("like.like") }}"
+                    action="{{ $post->total_likes->where("user_id",Auth::id())->count()==1?route("like.unlike",$post->id):route("like.like") }}"
                     id="like{{$post->id}}" method="post">
                     @csrf
                     <input type="text" name="post_id" value="{{ $post->id  }}" class="d-none">

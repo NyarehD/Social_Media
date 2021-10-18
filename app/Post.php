@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-protected $fillable = ["title", "description"];
+    protected $fillable = ["title", "description"];
+    public $with = ["images", "post_owner", "total_likes"];
+
     public function images(){
         return $this->hasMany(PostPhoto::class);
     }
@@ -15,7 +17,11 @@ protected $fillable = ["title", "description"];
         return $this->belongsTo(User::class, "user_id");
     }
 
-    public function totalLikes(){
-       return $this->hasMany(Like::class,"post_id");
+    /**
+     * Returning total likes of a post
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function total_likes(){
+        return $this->hasMany(Like::class, "post_id");
     }
 }
