@@ -15851,8 +15851,23 @@ a.text-dark:focus {
   border-radius: 50%;
 }
 
-.post .post-carousel img {
-  max-height: 400px;
+.post .post-carousel .slick-prev {
+  left: 10px;
+  display: block;
+}
+
+.post .post-carousel .slick-next {
+  right: 10px;
+}
+
+.post .post-carousel .slick-prev,
+.post .post-carousel .slick-next {
+  z-index: 100;
+}
+
+.post .post-carousel .slick-prev.slick-disabled:before,
+.post .post-carousel .slick-next.slick-disabled:before {
+  display: none;
 }
 
 .postIdToast {

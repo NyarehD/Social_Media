@@ -29,11 +29,16 @@
         <h5>{{ $post->title }}</h5>
         <p>{{ $post->description }}</p>
     </div>
-    <div class="post-carousel">
-        @foreach($post->images as $image)
-            <img class="card-img-top" src="{{ "storage/post/".$image->filename }}" alt="Card image cap">
-        @endforeach
-    </div>
+    @if(count($post->images)==1)
+        <img class="card-img-top" src="{{ "storage/post/".$post->images[0]->filename }}" alt="Card image cap">
+    @else
+        <div class="post-carousel">
+            @foreach($post->images as $image)
+                <img class="card-img-top" src="{{ "storage/post/".$image->filename }}" alt="Card image cap">
+            @endforeach
+        </div>
+        <ul class="slick-dots"></ul>
+    @endif
     <div class="p-2 card-body">
         <div class="row justify-content-between align-items-center">
             <div class="col-4 text-center">
