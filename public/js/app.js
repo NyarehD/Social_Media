@@ -37254,14 +37254,16 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
+            process.prependListener = noop;
+            process.prependOnceListener = noop;
 
-process.listeners = function (name) { return [] }
+            process.listeners = function (name) {
+                return []
+            }
 
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
+            process.binding = function (name) {
+                throw new Error('process.binding is not supported');
+            };
 
             process.cwd = function () {
                 return '/'
@@ -37861,12 +37863,12 @@ process.binding = function (name) {
             var g;
 
 // This works in non-strict mode
-g = (function() {
-	return this;
-})();
+            g = (function () {
+                return this;
+            })();
 
-try {
-	// This works if eval is allowed (see CSP)
+            try {
+                // This works if eval is allowed (see CSP)
 	g = g || new Function("return this")();
 } catch (e) {
 	// This works if the window reference is available
@@ -37916,21 +37918,15 @@ module.exports = function(module) {
 /***/ }),
 
 /***/ "./resources/js/app.js":
-/*!*****************************!*\
+        /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+        /*! no static exports found */
+        /***/ (function (module, exports, __webpack_require__) {
 
             __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
             $(document).ready(function () {
-                $(".toast").toast("show");
-                $(".post-carousel").slick({
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    autoplay: false
-                });
             });
 
             /***/
@@ -37945,19 +37941,19 @@ module.exports = function(module) {
 
             window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
             /**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
+             * We'll load jQuery and the Bootstrap jQuery plugin which provides support
+             * for JavaScript based Bootstrap features such as modals and tabs. This
+             * code may be modified to fit the specific needs of your application.
+             */
 
-try {
-    window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"];
-    window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+            try {
+                window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"];
+                window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
-    __webpack_require__(/*! slick-carousel/slick/slick.min */ "./node_modules/slick-carousel/slick/slick.min.js");
+                __webpack_require__(/*! slick-carousel/slick/slick.min */ "./node_modules/slick-carousel/slick/slick.min.js");
 
-    __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
-} catch (e) {}
+                __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
+            } catch (e) {}
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
