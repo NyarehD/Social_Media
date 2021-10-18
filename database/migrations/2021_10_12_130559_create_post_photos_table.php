@@ -9,7 +9,7 @@ class CreatePostPhotosTable extends Migration
     public function up(){
         Schema::create('post_photos', function(Blueprint $table){
             $table->bigIncrements('id');
-            $table->bigInteger("post_id");
+            $table->foreignId("post_id")->constrained();
             $table->string("filename");
             $table->timestamps();
         });

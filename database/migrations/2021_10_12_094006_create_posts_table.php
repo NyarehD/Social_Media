@@ -12,7 +12,6 @@ class CreatePostsTable extends Migration
             $table->text("title");
             $table->longText("description");
             $table->foreignId("user_id")->constrained();
-            $table->integer("likes")->default(0);
             $table->timestamps();
         });
     }
