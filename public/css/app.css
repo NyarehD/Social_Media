@@ -15895,6 +15895,17 @@ a.text-dark:focus {
   bottom: 10px;
 }
 
+.show-post .post-carousel.slick-dotted.slick-slider {
+  margin: 0;
+}
+
+.back-newsfeed {
+  inset: 15px;
+  z-index: 0;
+  height: 40px;
+  width: 40px;
+}
+
 .slick-prev {
   left: 10px;
   display: block;
