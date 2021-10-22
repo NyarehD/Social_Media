@@ -1,6 +1,6 @@
 @extends("layouts.app")
 @section("content")
-    <div class="container">
+    <div class="container py-2">
         <div class="row">
             <div class="col-8">
                 @foreach($posts as $post)
@@ -27,6 +27,7 @@
                 infinite: false,
                 left: true,
             })
+
         })
     </script>
 
