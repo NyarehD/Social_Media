@@ -15851,41 +15851,73 @@ a.text-dark:focus {
   border-radius: 50%;
 }
 
-.post .post-carousel .slick-prev {
+.post .post-carousel div img {
+  width: 100%;
+  height: 400px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 50% 50%;
+     object-position: 50% 50%;
+}
+
+.postIdToast {
+  position: fixed;
+  bottom: 2vw;
+  right: 2vw;
+}
+
+.postIdToast img {
+  width: 100%;
+}
+
+.show-post .post-profile-img {
+  display: block;
+  max-width: 70px;
+  max-height: 70px;
+  width: auto;
+  height: auto;
+  border-radius: 50%;
+}
+
+.show-post .post-carousel div {
+  height: 100vh;
+}
+
+.show-post .post-carousel div .card-img {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.show-post .post-carousel .slick-dots {
+  bottom: 10px;
+}
+
+.slick-prev {
   left: 10px;
   display: block;
 }
 
-.post .post-carousel .slick-next {
+.slick-next {
   right: 10px;
+  mix-blend-mode: difference;
 }
 
-.post .post-carousel .slick-prev,
-.post .post-carousel .slick-next {
-    z-index: 100;
+.slick-prev,
+.slick-next {
+  z-index: 100;
 }
 
-.post .post-carousel .slick-prev.slick-disabled:before,
-.post .post-carousel .slick-next.slick-disabled:before {
-    display: none;
+.slick-prev:before,
+.slick-next:before {
+  mix-blend-mode: difference;
+  color: grey;
 }
 
-.post .post-carousel div img {
-    width: 100%;
-    height: 400px;
-    -o-object-fit: cover;
-    object-fit: cover;
-    -o-object-position: 50% 50%;
-    object-position: 50% 50%;
-}
-
-.postIdToast {
-    position: fixed;
-    bottom: 2vw;
-    right: 2vw;
-}
-
-.postIdToast img {
-    width: 100%;
+.slick-prev.slick-disabled:before,
+.slick-next.slick-disabled:before {
+  display: none;
 }
 

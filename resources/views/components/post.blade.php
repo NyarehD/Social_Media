@@ -27,15 +27,20 @@
     </div>
     <div class="card-body">
         <h5>{{ $post->title }}</h5>
-        <p>{{ $post->description }}</p>
+        @if(strlen($post->description)>190)
+            <p class="">{{ substr($post->description,0,190) }} ...&nbsp;&nbsp; <a href="{{ route("post.show",$post) }}">See
+                    more</a></p>
+        @else
+            <p>{{ $post->description }}</p>
+        @endif
     </div>
     @if(count($post->images)==1)
-        <img class="card-img-top" src="{{ "storage/post/".$post->images[0]->filename }}" alt="Card image cap">
+        <img class="card-img-top" src="{{ asset("storage/post/".$post->images[0]->filename) }}" alt="Card image cap">
     @else
         <div class="post-carousel">
             @foreach($post->images as $image)
                 <div class="">
-                    <img class="card-img" src="{{ "storage/post/".$image->filename }}" alt="Card image cap">
+                    <img class="card-img" src="{{ asset("storage/post/".$image->filename) }}" alt="Card image cap">
                 </div>
             @endforeach
         </div>

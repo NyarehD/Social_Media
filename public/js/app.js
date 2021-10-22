@@ -37238,12 +37238,12 @@ function Item(fun, array) {
 Item.prototype.run = function () {
     this.fun.apply(null, this.array);
 };
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
+            process.title = 'browser';
+            process.browser = true;
+            process.env = {};
+            process.argv = [];
+            process.version = ''; // empty string to avoid regexp issues
+            process.versions = {};
 
             function noop() {
             }
@@ -37928,6 +37928,16 @@ module.exports = function(module) {
             __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
             $(document).ready(function () {
+                $(".toast").toast("show");
+                $(".post-carousel").slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: false,
+                    arrows: true,
+                    dots: true,
+                    infinite: false,
+                    left: true
+                });
             });
 
             /***/
@@ -37957,16 +37967,16 @@ module.exports = function(module) {
             } catch (e) {
             }
             /**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
+             * We'll load the axios HTTP library which allows us to easily issue requests
+             * to our Laravel back-end. This library automatically handles sending the
+             * CSRF token as a header based on the value of the "XSRF" token cookie.
+             */
 
 
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
+            window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+            window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+            /**
+             * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
