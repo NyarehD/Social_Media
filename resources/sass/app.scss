@@ -93,9 +93,20 @@
         .slick-dots {
             bottom: 10px;
         }
+
+        &.slick-dotted.slick-slider {
+            margin: 0;
+        }
     }
+
 }
 
+.back-newsfeed {
+    inset: 15px;
+    z-index: 0;
+    height: 40px;
+    width: 40px;
+}
 // For slick carousel
 .slick-prev {
     left: 10px;
@@ -106,7 +117,6 @@
     right: 10px;
     mix-blend-mode: difference;
 }
-
 .slick-prev, .slick-next {
     z-index: 100;
 }
@@ -119,3 +129,4 @@
 .slick-prev.slick-disabled:before, .slick-next.slick-disabled:before {
     display: none;
 }
+

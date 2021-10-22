@@ -37,7 +37,6 @@
                                 </div>
                             @endforeach
                         </div>
-                        <ul class="slick-dots"></ul>
                     @endif
                 </div>
                 <div class="col-3 py-2">
@@ -57,12 +56,52 @@
                             <p>{{ $post->description }}</p>
                         </div>
                     </div>
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-4 text-center p-0">
+                            <button class="btn w-100" form="like{{ $post->id }}">
+                                <i class="fa-lg {{ $post->total_likes->count()==1?"fas":"far" }} fa-thumbs-up"></i>{{ $post->total_likes->count() }}
+                                {{ $post->total_likes->count()>1?"Likes":"Like" }}
+                            </button>
+                            @error("post_id")
+                            <div role="alert" aria-live="assertive" aria-atomic="true" class="toast postIdToast"
+                                 data-autohide="false">
+                                <div class="toast-header">
+                                    <strong>{{ $message }}</strong>
+                                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                            @enderror
+
+                            <form
+                                action="{{ $post->total_likes->where("user_id",Auth::id())->count()==1?route("like.unlike",$post->id):route("like.like") }}"
+                                id="like{{$post->id}}" method="post">
+                                @csrf
+                                <input type="text" name="post_id" value="{{ $post->id  }}" class="d-none">
+                            </form>
+                        </div>
+                        <div class="col-4 text-center p-0">
+                            <button class="btn w-100">
+                                <i class="far fa-lg fa-comment-alt"></i> Comment
+                            </button>
+                        </div>
+                        <div class="col-4 text-center p-0">
+                            <button class="btn w-100">
+                                <i class="fas fa-lg fa-share"></i> Share
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
     </main>
+    <div class="position-fixed back-newsfeed">
+        <a href="{{ route("newsfeed") }}" class="h1"><i class="fas fa-chevron-circle-left"></i></a>
+    </div>
 </div>
-@yield("script")
 <script>
     $(document).ready(function () {
         $(".toast").toast("show")

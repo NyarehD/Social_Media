@@ -44,7 +44,6 @@
                 </div>
             @endforeach
         </div>
-        <ul class="slick-dots"></ul>
     @endif
     <div class="p-2 card-body">
         <div class="row justify-content-between align-items-center">
