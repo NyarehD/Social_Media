@@ -37231,13 +37231,14 @@ process.nextTick = function (fun) {
 };
 
 // v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
+            function Item(fun, array) {
+                this.fun = fun;
+                this.array = array;
+            }
+
+            Item.prototype.run = function () {
+                this.fun.apply(null, this.array);
+            };
             process.title = 'browser';
             process.browser = true;
             process.env = {};
@@ -37934,6 +37935,15 @@ module.exports = function(module) {
                     slidesToScroll: 1,
                     autoplay: false,
                     arrows: true,
+                    dots: false,
+                    infinite: false,
+                    left: true
+                });
+                $(".show-post-carousel").slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: false,
+                    arrows: true,
                     dots: true,
                     infinite: false,
                     left: true
@@ -37977,9 +37987,9 @@ module.exports = function(module) {
             window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
             /**
              * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
+             * for events that are broadcast by Laravel. Echo and event broadcasting
+             * allows your team to easily build robust real-time web applications.
+             */
 // import Echo from 'laravel-echo';
 // window.Pusher = require('pusher-js');
 // window.Echo = new Echo({

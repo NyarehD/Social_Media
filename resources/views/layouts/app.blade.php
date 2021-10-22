@@ -78,7 +78,7 @@
         </div>
     </nav>
 
-    <main class="overflow-hidden">
+    <main class="overflow-hidden py-2">
         @yield('content')
 
     </main>

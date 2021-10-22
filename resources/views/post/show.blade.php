@@ -24,12 +24,13 @@
     <main class="overflow-hidden">
         <div class="container-fluid p-0 show-post h-100">
             <div class="row">
-                <div class="col-9">
+                <div class="col-9 p-0 bg-white">
                     @if(count($post->images)==1)
-                        <img class="card-img-top" src="{{ asset("storage/post/".$post->images[0]->filename) }}"
+                        <img class="card-img-top show-post-not-carousel"
+                             src="{{ asset("storage/post/".$post->images[0]->filename) }}"
                              alt="Card image cap">
                     @else
-                        <div class="post-carousel">
+                        <div class="show-post-carousel">
                             @foreach($post->images as $image)
                                 <div class="">
                                     <img class="card-img" src="{{ asset("storage/post/".$image->filename) }}"
@@ -39,7 +40,7 @@
                         </div>
                     @endif
                 </div>
-                <div class="col-3 py-2">
+                <div class="col-3 py-2 border-right card">
                     <div class="row">
                         <div class="col-12 d-flex align-items-center">
                             <img

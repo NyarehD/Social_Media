@@ -1,31 +1,45 @@
 <div class="card post mb-3">
+    <a href="{{ route("post.show",$post->id) }} " class="d-none"></a>
     <div class="card-body py-1">
-        <div class="row justify-content-between align-items-center">
-            <div class="col-4 d-flex align-items-center">
-                <img
-                    src="{{ isset($post->post_owner->profile_picture)?asset("storage/profile-picture/".$post->post_owner->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
-                    alt=""
-                    class="post-profile-img h-100">
+        <div class="row justify-content-between align-items-center px-3">
+            <div class="d-flex align-items-center">
+                <div class="mr-2">
+                    <img
+                        src="{{ isset($post->post_owner->profile_picture)?asset("storage/profile-picture/".$post->post_owner->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
+                        alt=""
+                        class="post-profile-img h-100 ">
+                </div>
                 <div class="">
                     <h4 class="mb-0">{{ $post->post_owner->name  }}</h4>
                     <h6>{{ $post->created_at->diffForHumans() }}</h6>
                 </div>
             </div>
-            <div class="col-4">
-                <a href="{{ route('post.edit',$post->id) }}" class="btn btn-primary">Edit</a>
-                <button class="btn btn-danger" type="submit" form="del{{ $post->id }}">
-                    Delete
-                </button>
+            <div class="mr-2">
                 <form action="{{ route("post.destroy", $post->id) }}"
                       id="del{{ $post->id }}"
                       method="post">
                     @csrf
                     @method("delete")
                 </form>
+                <div class="dropdown my-auto">
+                    <a class="btn" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                        <a href="{{ route("post.show",$post->id) }}" class="dropdown-item">View Post</a>
+                        @if(Auth::id()===$post->user_id)
+                            <a href="{{ route('post.edit',$post->id) }}" class="dropdown-item">Edit</a>
+                            <button class="dropdown-item" type="submit" form="del{{ $post->id }}">
+                                Delete
+                            </button>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="card-body">
+    <div class="card-body py-0">
         <h5>{{ $post->title }}</h5>
         @if(strlen($post->description)>190)
             <p class="">{{ substr($post->description,0,190) }} ...&nbsp;&nbsp; <a href="{{ route("post.show",$post) }}">See
