@@ -15855,6 +15855,10 @@ a.text-dark:focus {
   border-radius: 50%;
 }
 
+.post .post-profile-name:hover {
+  text-decoration: none;
+}
+
 .post .post-carousel div img {
   width: 100%;
   height: 400px;

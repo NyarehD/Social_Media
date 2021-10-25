@@ -29,7 +29,7 @@ Route::middleware("auth")->group(function(){
     Route::post("/unlike", [LikesController::class, "unlike"])->name("like.unlike");
 
     Route::prefix("/profile")->group(function(){
-        Route::get('/', "ProfileController@index")->name("profile");
+        Route::get('/id/{id}', "ProfileController@index")->name("profile");
         Route::view("/edit", "profile.edit")->name("profile.edit");
         Route::post("/edit", "ProfileController@profileUpdate")->name("profile.update");
         Route::post("/edit/profile-picture", "ProfileController@profilePictureUpdate")->name("profile.pictureUpdate");

@@ -43,12 +43,15 @@
                 <div class="col-3 py-2 border-right card">
                     <div class="row">
                         <div class="col-12 d-flex align-items-center">
-                            <img
-                                src="{{ isset($post->post_owner->profile_picture)?asset("storage/profile-picture/".$post->post_owner->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
-                                alt=""
-                                class="post-profile-img h-100">
+                            <a href="{{ route('profile',$post->post_owner->id) }}" class="">
+                                <img
+                                    src="{{ isset($post->post_owner->profile_picture)?asset("storage/profile-picture/".$post->post_owner->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
+                                    alt=""
+                                    class="post-profile-img h-100 ">
+                            </a>
                             <div class="">
-                                <h4 class="mb-0">{{ $post->post_owner->name  }}</h4>
+                                <a href="{{ route('profile',$post->post_owner->id) }}"
+                                   class="h4">{{ $post->post_owner->name }}</a>
                                 <h6>{{ $post->created_at->diffForHumans() }}</h6>
                             </div>
                         </div>
