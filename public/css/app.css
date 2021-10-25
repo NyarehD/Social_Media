@@ -15842,6 +15842,17 @@ a.text-dark:focus {
   height: 60px;
 }
 
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+  padding-right: 15px !important;
+  padding-left: 15px !important;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .post a {
   cursor: pointer;
 }

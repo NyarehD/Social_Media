@@ -21,7 +21,7 @@
 </head>
 <body>
 <div id="app" class="">
-    <main class="overflow-hidden">
+    <main class="">
         <div class="container-fluid p-0 show-post h-100">
             <div class="row">
                 <div class="col-9 p-0 bg-white">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-3 py-2 border-right card">
                     <div class="row">
-                        <div class="col-12 d-flex align-items-center">
+                        <div class="col-10 d-flex align-items-center">
                             <a href="{{ route('profile',$post->post_owner->id) }}" class="">
                                 <img
                                     src="{{ isset($post->post_owner->profile_picture)?asset("storage/profile-picture/".$post->post_owner->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
@@ -55,6 +55,31 @@
                                 <h6>{{ $post->created_at->diffForHumans() }}</h6>
                             </div>
                         </div>
+                        <div class="col-2">
+                            <form action="{{ route("post.destroy", $post->id) }}"
+                                  id="del{{ $post->id }}"
+                                  method="post">
+                                @csrf
+                                @method("delete")
+                            </form>
+                            <div class="dropdown my-auto">
+                                <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <a href="{{ route("post.show",$post->id) }}" class="dropdown-item">View Post</a>
+                                    @if(Auth::id()===$post->user_id)
+                                        <a href="{{ route('post.edit',$post->id) }}" class="dropdown-item">Edit</a>
+                                        <button class="dropdown-item" type="submit" form="del{{ $post->id }}">
+                                            Delete
+                                        </button>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-12">
                             <h5>{{ $post->title }}</h5>
                             <p>{{ $post->description }}</p>
@@ -100,11 +125,10 @@
                 </div>
             </div>
         </div>
-
+        <div class="position-fixed back-newsfeed">
+            <a href="{{ route("newsfeed") }}" class="h1"><i class="fas fa-chevron-circle-left"></i></a>
+        </div>
     </main>
-    <div class="position-fixed back-newsfeed">
-        <a href="{{ route("newsfeed") }}" class="h1"><i class="fas fa-chevron-circle-left"></i></a>
-    </div>
 </div>
 <script>
     $(document).ready(function () {

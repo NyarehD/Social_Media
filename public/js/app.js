@@ -37929,7 +37929,8 @@ module.exports = function(module) {
             __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
             $(document).ready(function () {
-                $(".toast").toast("show");
+                $(".toast").toast("show"); // Carousel for posts in newsfeed
+
                 $(".post-carousel").slick({
                     slidesToShow: 1,
                     slidesToScroll: 1,
@@ -37938,7 +37939,8 @@ module.exports = function(module) {
                     dots: false,
                     infinite: false,
                     left: true
-                });
+                }); // Carousel for post show
+
                 $(".show-post-carousel").slick({
                     slidesToShow: 1,
                     slidesToScroll: 1,
@@ -37999,7 +38001,8 @@ module.exports = function(module) {
 //     forceTLS: true
 // });
 
-/***/ }),
+            /***/
+        }),
 
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\

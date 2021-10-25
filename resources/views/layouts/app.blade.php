@@ -82,7 +82,6 @@
 
     <main class="overflow-hidden py-2">
         @yield('content')
-
     </main>
 </div>
 @yield("script")

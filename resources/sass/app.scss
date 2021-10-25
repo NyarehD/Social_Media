@@ -31,6 +31,14 @@
     height: 60px;
 }
 
+// To fix the overflowing when using .container-fluid
+.container-fluid {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 // Post in New Feed
 .post {
     a {

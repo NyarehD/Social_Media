@@ -1,5 +1,4 @@
 <div class="card post mb-3" id="{{ $post->id }}">
-    <a href="{{ route("post.show",$post->id) }} " class="d-none"></a>
     <div class="card-body py-1">
         <div class="row justify-content-between align-items-center px-3 py-2">
             <div class="d-flex align-items-center">
@@ -12,11 +11,12 @@
                     </a>
                 </div>
                 <div class="">
-                    <a href="{{ route('profile',$post->post_owner->id) }}" class="h4">{{ $post->post_owner->name }}</a>
+                    <a href="{{ route('profile',$post->post_owner->id) }}"
+                       class="h4">{{ $post->post_owner->name }}</a>
                     <h6>{{ $post->created_at->diffForHumans() }}</h6>
                 </div>
             </div>
-            <div class="mr-2">
+            <div class="mr-2 post-dropdown-container">
                 <form action="{{ route("post.destroy", $post->id) }}"
                       id="del{{ $post->id }}"
                       method="post">
@@ -24,11 +24,11 @@
                     @method("delete")
                 </form>
                 <div class="dropdown my-auto">
-                    <a class="btn" href="#" role="button" id="dropdownMenuLink"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-ellipsis-h"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                         <a href="{{ route("post.show",$post->id) }}" class="dropdown-item">View Post</a>
                         @if(Auth::id()===$post->user_id)
                             <a href="{{ route('post.edit',$post->id) }}" class="dropdown-item">Edit</a>
@@ -44,14 +44,16 @@
     <div class="card-body py-0">
         <h5>{{ $post->title }}</h5>
         @if(strlen($post->description)>190)
-            <p class="">{{ substr($post->description,0,190) }} ...&nbsp;&nbsp; <a href="{{ route("post.show",$post) }}">See
+            <p class="">{{ substr($post->description,0,190) }} ...&nbsp;&nbsp; <a
+                    href="{{ route("post.show",$post) }}">See
                     more</a></p>
         @else
             <p>{{ $post->description }}</p>
         @endif
     </div>
     @if(count($post->images)==1)
-        <img class="card-img-top" src="{{ asset("storage/post/".$post->images[0]->filename) }}" alt="Card image cap">
+        <img class="card-img-top" src="{{ asset("storage/post/".$post->images[0]->filename) }}"
+             alt="Card image cap">
     @else
         <div class="post-carousel">
             @foreach($post->images as $image)
