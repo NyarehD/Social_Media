@@ -46,6 +46,13 @@
         border-radius: 50%;
     }
 
+    .post-profile-name {
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
     .post-carousel {
 
 

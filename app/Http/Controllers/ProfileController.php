@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    public function index(){
-        $user = Auth::user();
-        $post_by_user = Post::where("user_id", Auth::id())->when(request()->search, function($query){
+    public function index($id){
+        $user = User::find($id);
+        $post_by_user = Post::where("user_id", $id)->when(request()->search, function($query){
             $search_key = request()->search;
             return $query->where("title", "LIKE", "%$search_key%")->orWhere("description", "LIKE", "%$search_key%");
         })->get();
@@ -50,7 +50,7 @@ class ProfileController extends Controller
         $user->email = $request->email;
         $user->bio = $request->bio;
         $user->update();
-        return redirect()->route("profile");
+        return redirect()->route("profile", Auth::id());
     }
 
 }

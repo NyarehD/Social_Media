@@ -53,14 +53,16 @@
                         @endif
                     @else
                         <li class="nav-item dropdown d-flex justify-content-center">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle font-weight-bold" href="#" role="button"
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle font-weight-bold" href="#"
+                               role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <img
-                                src="{{ isset(Auth::user()->profile_picture)?asset("storage/profile-picture/".Auth::user()->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
-                                alt="" id="profile-img-in-nav" class="">
+                                <img
+                                    src="{{ isset(Auth::user()->profile_picture)?asset("storage/profile-picture/".Auth::user()->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
+                                    alt="" id="profile-img-in-nav" class="">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a href="{{ route('profile') }}" class="dropdown-item">{{ Auth::user()->name }}</a>
+                                <a href="{{ route('profile',Auth::id()) }}"
+                                   class="dropdown-item">{{ Auth::user()->name }}</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

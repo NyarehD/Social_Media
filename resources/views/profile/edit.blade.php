@@ -69,10 +69,11 @@
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                       <div class="d-flex justify-content-end">
-                                           <a href="{{ route('profile') }}" class="btn btn-outline-secondary mr-2">Back</a>
-                                           <button class="btn btn-primary ">Update</button>
-                                       </div>
+                                        <div class="d-flex justify-content-end">
+                                            <a href="{{ route('profile',Auth::id()) }}"
+                                               class="btn btn-outline-secondary mr-2">Back</a>
+                                            <button class="btn btn-primary ">Update</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
