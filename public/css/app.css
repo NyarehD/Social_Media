@@ -15929,6 +15929,11 @@ a.text-dark:focus {
   margin: 0;
 }
 
+.show-post .comment-profile-img {
+  max-width: 50px;
+  max-height: 50px;
+}
+
 .back-newsfeed {
   inset: 15px;
   z-index: 0;

@@ -38004,12 +38004,12 @@ module.exports = function(module) {
             /***/
         }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
+        /***/ "./resources/sass/app.scss":
+        /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
   \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+        /*! no static exports found */
+        /***/ (function (module, exports) {
 
 // removed by extract-text-webpack-plugin
 

@@ -24,6 +24,7 @@ Auth::routes();
 Route::middleware("auth")->group(function(){
     // Post
     Route::resource("/post", "PostController");
+    Route::resource("/comment", "CommentController");
     // Post like
     Route::post("/like", [LikesController::class, "like"])->name("like.like");
     Route::post("/unlike", [LikesController::class, "unlike"])->name("like.unlike");
