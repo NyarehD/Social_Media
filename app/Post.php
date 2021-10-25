@@ -17,10 +17,6 @@ class Post extends Model
         return $this->belongsTo(User::class, "user_id");
     }
 
-    /**
-     * Returning total likes of a post
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function total_likes(){
         return $this->hasMany(Like::class, "post_id");
     }

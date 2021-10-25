@@ -67,7 +67,7 @@
         <div class="row justify-content-between align-items-center">
             <div class="col-4 text-center">
                 <button class="btn w-100" form="like{{ $post->id }}">
-                    <i class="fa-lg {{ $post->total_likes->count()==1?"fas":"far" }} fa-thumbs-up"></i>{{ $post->total_likes->count() }}
+                    <i class="fa-lg {{ $post->total_likes->where("user_id",Auth::id())->count()===1?"fas":"far" }} fa-thumbs-up"></i>{{ $post->total_likes->count() }}
                     {{ $post->total_likes->count()>1?"Likes":"Like" }}
                 </button>
                 @error("post_id")
