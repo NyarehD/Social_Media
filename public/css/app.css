@@ -15831,7 +15831,6 @@ a.text-dark:focus {
 
 #profile-img-in-nav {
   width: 40px;
-  border-radius: 50%;
 }
 
 #profile-img {
@@ -15863,7 +15862,6 @@ a.text-dark:focus {
   max-height: 70px;
   width: auto;
   height: auto;
-  border-radius: 50%;
 }
 
 .post .post-profile-name:hover {
@@ -15895,11 +15893,10 @@ a.text-dark:focus {
 
 .show-post .post-profile-img {
   display: block;
-  max-width: 70px;
-  max-height: 70px;
+  max-width: 60px;
+  max-height: 60px;
   width: auto;
   height: auto;
-  border-radius: 50%;
 }
 
 .show-post .show-post-not-carousel {
@@ -15929,6 +15926,10 @@ a.text-dark:focus {
   margin: 0;
 }
 
+.show-post .comments div.overflow-auto {
+  height: 100%;
+}
+
 .show-post .comment-profile-img {
   max-width: 50px;
   max-height: 50px;
@@ -15939,6 +15940,14 @@ a.text-dark:focus {
   z-index: 0;
   height: 40px;
   width: 40px;
+}
+
+.back-newsfeed i {
+  transition: 0.2s;
+}
+
+.back-newsfeed i:active {
+  transform: translateY(10px);
 }
 
 .slick-prev {

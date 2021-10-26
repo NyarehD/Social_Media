@@ -20,4 +20,8 @@ class Post extends Model
     public function total_likes(){
         return $this->hasMany(Like::class, "post_id");
     }
+
+    public function comments(){
+        return $this->hasMany(Comment::class, "post_id");
+    }
 }
