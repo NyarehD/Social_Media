@@ -38013,9 +38013,10 @@ module.exports = function(module) {
 
 // removed by extract-text-webpack-plugin
 
-/***/ }),
+            /***/
+        }),
 
-/***/ 0:
+        /***/ 0:
 /*!*************************************************************!*\
   !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
   \*************************************************************/

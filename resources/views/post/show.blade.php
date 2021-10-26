@@ -19,12 +19,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="">
 <div id="app" class="">
     <main class="">
         <div class="container-fluid p-0 show-post h-100">
             <div class="row">
-                <div class="col-9 p-0 bg-light">
+                <div class="col-9 p-0 bg-light overflow-hidden">
                     @if(count($post->images)==1)
                         <img class="card-img-top show-post-not-carousel"
                              src="{{ asset("storage/post/".$post->images[0]->filename) }}"
@@ -40,16 +40,16 @@
                         </div>
                     @endif
                 </div>
-                <div class="col-3 py-2 border-right card">
+                <div class="col-3 py-2 border-right card overflow-auto vh-100">
                     <div class="row">
-                        <div class="col-10 d-flex align-items-center">
+                        <div class="col-10 d-flex align-items-center mb-2">
                             <a href="{{ route('profile',$post->post_owner->id) }}" class="">
                                 <img
-                                    src="{{ isset($post->post_owner->profile_picture)?asset("storage/profile-picture/".$post->post_owner->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
+                                    src="{{ asset("storage/profile-picture/".$post->post_owner->profile_picture) }}"
                                     alt=""
-                                    class="post-profile-img h-100 ">
+                                    class="post-profile-img h-100 rounded-pill">
                             </a>
-                            <div class="">
+                            <div class="ml-2">
                                 <a href="{{ route('profile',$post->post_owner->id) }}"
                                    class="h4">{{ $post->post_owner->name }}</a>
                                 <h6>{{ $post->created_at->diffForHumans() }}</h6>
@@ -68,7 +68,6 @@
                                     <i class="fas fa-ellipsis-h"></i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                    <a href="{{ route("post.show",$post->id) }}" class="dropdown-item">View Post</a>
                                     @if(Auth::id()===$post->user_id)
                                         <a href="{{ route('post.edit',$post->id) }}" class="dropdown-item">Edit</a>
                                         <button class="dropdown-item" type="submit" form="del{{ $post->id }}">
@@ -122,7 +121,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row comments">
                         <div class="col-12">
                             <div class="">
                                 <form action="{{ route('comment.store') }}" class="justify-content-between"
@@ -135,24 +134,28 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="row h-auto">
-                                <div class="col-2 p-0 pl-3">
-                                    <img
-                                        src="{{ isset($post->post_owner->profile_picture)?asset("storage/profile-picture/".$post->post_owner->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
-                                        alt=""
-                                        class="comment-profile-img h-100 ">
-                                </div>
-                                <div class="col-10 p-0 pr-3">
-                                    <div class="">
-                                        <p class="">Some comment here</p>
+                        <div class="col-12 overflow-auto">
+                            @foreach($post->comments as $comment)
+                                <div class="row h-auto">
+                                    <div class="col-3 p-0 pl-3">
+                                        <img
+                                            src="{{asset("storage/profile-picture/".$post->post_owner->profile_picture) }}"
+                                            alt=""
+                                            class="comment-profile-img h-100 rounded-pill">
                                     </div>
-                                    <div class="text-right">
-                                        <a href="" class="text-black-50 mr-2">Edit</a>
-                                        <a href="" class="text-black-50">Delete</a>
+                                    <div class="col-9 px-0 pr-3">
+                                        <div class="">
+                                            <p class="mb-0">{{ $comment->comment_owner->name}}</p>
+                                            <p class="mb-0">{{ $comment->comment }}</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="" class="text-black-50 mr-2">Edit</a>
+                                            <a href="" class="text-black-50">Delete</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <hr class="mt-0">
+                            @endforeach
                         </div>
                     </div>
                 </div>

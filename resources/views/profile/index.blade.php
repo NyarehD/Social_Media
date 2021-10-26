@@ -7,7 +7,7 @@
                     <div class="row g-0">
                         <div class="col-md-4">
                             <img
-                                src="{{ isset($user->profile_picture)?asset("storage/profile-picture/".$user->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
+                                src="{{ asset("storage/profile-picture/".$user->profile_picture) }}"
                                 class="img-fluid rounded-start" alt="..." id="profile-img">
                         </div>
                         <div class="col-md-8">

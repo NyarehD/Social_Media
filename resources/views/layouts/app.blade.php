@@ -57,8 +57,8 @@
                                role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 <img
-                                    src="{{ isset(Auth::user()->profile_picture)?asset("storage/profile-picture/".Auth::user()->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
-                                    alt="" id="profile-img-in-nav" class="">
+                                    src="{{ asset("storage/profile-picture/".Auth::user()->profile_picture) }}"
+                                    alt="" id="profile-img-in-nav" class="rounded-pill">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a href="{{ route('profile',Auth::id()) }}"

@@ -5,9 +5,9 @@
                 <div class="mr-2">
                     <a href="{{ route('profile',$post->post_owner->id) }}" class="">
                         <img
-                            src="{{ isset($post->post_owner->profile_picture)?asset("storage/profile-picture/".$post->post_owner->profile_picture): asset("storage/profile-picture/default-profile.jpg") }}"
+                            src="{{ asset("storage/profile-picture/".$post->post_owner->profile_picture) }}"
                             alt=""
-                            class="post-profile-img h-100 ">
+                            class="post-profile-img h-100 rounded-pill">
                     </a>
                 </div>
                 <div class="">
