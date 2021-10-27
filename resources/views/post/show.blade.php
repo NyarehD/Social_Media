@@ -91,7 +91,7 @@
                                 {{ $post->total_likes->count()>1?"Likes":"Like" }}
                             </button>
                             @error("post_id")
-                            <div role="alert" aria-live="assertive" aria-atomic="true" class="toast postIdToast"
+                            <div role="alert" aria-live="assertive" aria-atomic="true" class="toast fixedToast"
                                  data-autohide="false">
                                 <div class="toast-header">
                                     <strong>{{ $message }}</strong>
@@ -136,25 +136,7 @@
                         </div>
                         <div class="col-12 overflow-auto">
                             @foreach($post->comments as $comment)
-                                <div class="row h-auto">
-                                    <div class="col-3 p-0 pl-3">
-                                        <img
-                                            src="{{asset("storage/profile-picture/".$post->post_owner->profile_picture) }}"
-                                            alt=""
-                                            class="comment-profile-img h-100 rounded-pill">
-                                    </div>
-                                    <div class="col-9 px-0 pr-3">
-                                        <div class="">
-                                            <p class="mb-0">{{ $comment->comment_owner->name}}</p>
-                                            <p class="mb-0">{{ $comment->comment }}</p>
-                                        </div>
-                                        <div class="text-right">
-                                            <a href="" class="text-black-50 mr-2">Edit</a>
-                                            <a href="" class="text-black-50">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="mt-0">
+                                <x-comment :comment=$comment></x-comment>
                             @endforeach
                         </div>
                     </div>
@@ -164,6 +146,18 @@
         <div class="position-fixed back-newsfeed">
             <a href="{{ route("newsfeed") }}" class="h1"><i class="fas fa-chevron-circle-left"></i></a>
         </div>
+        {{--        Toast for comment deleting--}}
+        @if(session("message"))
+            <div role="alert" aria-live="assertive" aria-atomic="true" class="toast fixedToast"
+                 data-autohide="false">
+                <div class="toast-header">
+                    <strong>{{ session("message")}}</strong>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        @endif
     </main>
 </div>
 <script>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $fillable = ["title", "description"];
-    public $with = ["images", "post_owner", "total_likes"];
+    public $with = ["images", "post_owner", "total_likes", "comments"];
 
     public function images(){
         return $this->hasMany(PostPhoto::class);
