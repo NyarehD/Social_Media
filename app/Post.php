@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $fillable = ["title", "description"];
-    public $with = ["images", "post_owner", "total_likes", "comments"];
+    public $with = ["images", "owner", "total_likes", "comments"];
 
     public function images(){
         return $this->hasMany(PostPhoto::class);
     }
 
-    public function post_owner(){
+    public function owner(){
         return $this->belongsTo(User::class, "user_id");
     }
 
