@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LikesController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,11 +20,10 @@ Route::get('/', "PostController@index")->name("newsfeed");
 
 Auth::routes();
 
-// Profile
-
 Route::middleware("auth")->group(function(){
     // Post
     Route::resource("/post", "PostController");
+    Route::post("/post/{post}/share", [PostController::class, "share"])->name("post.share");
     Route::resource("/comment", "CommentController");
     // Post like
     Route::post("/like", [LikesController::class, "like"])->name("like.like");
@@ -35,5 +35,4 @@ Route::middleware("auth")->group(function(){
         Route::post("/edit", "ProfileController@profileUpdate")->name("profile.update");
         Route::post("/edit/profile-picture", "ProfileController@profilePictureUpdate")->name("profile.pictureUpdate");
     });
-
 });

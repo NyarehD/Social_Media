@@ -94,9 +94,12 @@
                 </a>
             </div>
             <div class="col-4 text-center">
-                <button class="btn w-100">
+                <button class="btn w-100" form="share{{$post->id}}">
                     <i class="fas fa-lg fa-share mr-2"></i> Share
                 </button>
+                <form action="{{ route('post.share',$post->id) }}" id="share{{$post->id}}" method="post">
+                    @csrf
+                </form>
             </div>
         </div>
     </div>
