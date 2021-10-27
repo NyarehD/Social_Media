@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Image;
 
 class ProfileController extends Controller
 {
@@ -34,12 +35,14 @@ class ProfileController extends Controller
         ]);
         $dir = "public/profile-picture/";
 
-        if (!Auth::user()->profile_picture == "default-profile.jpg") {
+        if (Auth::user()->profile_picture != "default-profile.jpg") {
             Storage::delete($dir . Auth::user()->profile_picture);
         }
 
         $newName = uniqid() . "_profile-picture." . $request->file("profile_picture")->getClientOriginalExtension();
-        $request->file("profile_picture")->storeAs($dir, $newName);
+        $img = Image::make($request->file("profile_picture"));
+        $img->fit(350);
+        $img->save("storage/profile-picture/" . $newName);
 
         $user = User::find(Auth::id());
         $user->profile_picture = $newName;
