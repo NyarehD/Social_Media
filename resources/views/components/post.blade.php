@@ -3,16 +3,16 @@
         <div class="row justify-content-between align-items-center px-3 py-2">
             <div class="d-flex align-items-center">
                 <div class="mr-2">
-                    <a href="{{ route('profile',$post->post_owner->id) }}" class="">
+                    <a href="{{ route('profile',$post->owner->id) }}" class="">
                         <img
-                            src="{{ asset("storage/profile-picture/".$post->post_owner->profile_picture) }}"
+                            src="{{ asset("storage/profile-picture/".$post->owner->profile_picture) }}"
                             alt=""
                             class="post-profile-img h-100 rounded-pill">
                     </a>
                 </div>
                 <div class="">
-                    <a href="{{ route('profile',$post->post_owner->id) }}"
-                       class="h4">{{ $post->post_owner->name }}</a>
+                    <a href="{{ route('profile',$post->owner->id) }}"
+                       class="h4">{{ $post->owner->name }}</a>
                     <h6>{{ $post->created_at->diffForHumans() }}</h6>
                 </div>
             </div>

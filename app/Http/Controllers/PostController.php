@@ -14,7 +14,7 @@ class PostController extends Controller
 {
     public function index(){
         return view("newsfeed", [
-            "posts" => Post::all(),
+            "posts" => Post::latest()->get(),
         ]);
     }
 
@@ -58,13 +58,17 @@ class PostController extends Controller
         return view("post.show", compact('post'));
     }
 
+    /**
+     * @param Post $post
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     */
     public function edit(Post $post){
         if (Gate::allows("post_owner", $post)) {
             return view("post.edit", [
                 "post" => $post
             ]);
         }
-        return abort(404);
+        return abort(403);
     }
 
     public function update(Request $request, Post $post){
@@ -104,7 +108,7 @@ class PostController extends Controller
             }
             return redirect()->route("newsfeed");
         }
-        return abort(404);
+        return abort(403);
     }
 
     public function destroy(Post $post){
@@ -120,6 +124,6 @@ class PostController extends Controller
             $post->delete();
             return redirect()->route("newsfeed")->with("status", "$title is deleted");
         }
-        return abort(404);
+        return abort(403);
     }
 }

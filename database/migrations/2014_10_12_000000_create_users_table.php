@@ -11,9 +11,8 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('users', function (Blueprint $table) {
+    public function up(){
+        Schema::create('users', function(Blueprint $table){
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
@@ -21,6 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string("profile_picture")->default("default-profile.jpg");
             $table->text("bio")->nullable();
+            $table->string("facebook_link")->unique()->nullable();
+            $table->string("twitter_link")->unique()->nullable();
+            $table->string("github_link")->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -31,8 +33,7 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down(){
         Schema::dropIfExists('users');
     }
 }

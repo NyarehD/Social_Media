@@ -43,15 +43,15 @@
                 <div class="col-3 py-2 border-right card overflow-auto vh-100">
                     <div class="row">
                         <div class="col-10 d-flex align-items-center mb-2">
-                            <a href="{{ route('profile',$post->post_owner->id) }}" class="">
+                            <a href="{{ route('profile',$post->owner->id) }}" class="">
                                 <img
-                                    src="{{ asset("storage/profile-picture/".$post->post_owner->profile_picture) }}"
+                                    src="{{ asset("storage/profile-picture/".$post->owner->profile_picture) }}"
                                     alt=""
                                     class="post-profile-img h-100 rounded-pill">
                             </a>
                             <div class="ml-2">
-                                <a href="{{ route('profile',$post->post_owner->id) }}"
-                                   class="h4">{{ $post->post_owner->name }}</a>
+                                <a href="{{ route('profile',$post->owner->id) }}"
+                                   class="h4">{{ $post->owner->name }}</a>
                                 <h6>{{ $post->created_at->diffForHumans() }}</h6>
                             </div>
                         </div>
@@ -121,7 +121,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row comments">
+                    <div class="row comments-container">
                         <div class="col-12">
                             <div class="">
                                 <form action="{{ route('comment.store') }}" class="justify-content-between"
@@ -134,7 +134,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="col-12 overflow-auto">
+                        <div class="col-12 overflow-auto comments h-100">
                             @foreach($post->comments as $comment)
                                 <x-comment :comment=$comment></x-comment>
                             @endforeach
@@ -162,7 +162,7 @@
 </div>
 <script>
     $(document).ready(function () {
-        $(".toast").toast("show")
+        $(".toast").toast("show");
     })
 </script>
 </body>

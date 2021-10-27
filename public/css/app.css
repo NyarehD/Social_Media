@@ -15926,15 +15926,11 @@ a.text-dark:focus {
   margin: 0;
 }
 
-.show-post .comments div.overflow-auto {
-  height: 100%;
-}
-
-.show-post .comments .comment .comment-options {
+.show-post .comments-container .comment .comment-options {
   display: none;
 }
 
-.show-post .comments .comment:hover .comment-options {
+.show-post .comments-container .comment:hover .comment-options {
   display: block;
 }
 
