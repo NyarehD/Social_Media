@@ -3,7 +3,7 @@
   <component name="LaravelIdeaPersonalSettings">
     <option name="generationStringOptionValues">
       <map>
-        <entry key="createBladeComponent.type" value="Class only" />
+        <entry key="createBladeComponent.type" value="Class and blade" />
         <entry key="createModel.createController" value="1" />
         <entry key="createModel.createMigration" value="1" />
       </map>

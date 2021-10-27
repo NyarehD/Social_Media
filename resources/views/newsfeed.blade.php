@@ -4,7 +4,135 @@
         <div class="row">
             <div class="col-8" id="newsfeed-post-container">
                 @foreach($posts as $post)
-                    <x-post :post="$post"></x-post>
+                    <div class="card post mb-3" id="{{ $post->id }}">
+                        <div class="card-body py-1">
+                            <div class="row justify-content-between align-items-center px-3 py-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="mr-2">
+                                        @if($post->original_post_id===null)
+                                            <a href="{{ route('profile',$post->owner->id) }}" class="">
+                                                <img
+                                                    src="{{ asset("storage/profile-picture/".$post->owner->profile_picture) }}"
+                                                    alt=""
+                                                    class="post-profile-img h-100 rounded-pill">
+                                            </a>
+                                        @else
+                                            <a href="{{ route('profile',$post->original_post->owner->id) }}" class="">
+                                                <img
+                                                    src="{{ asset("storage/profile-picture/".$post->original_post->owner->profile_picture) }}"
+                                                    alt=""
+                                                    class="post-profile-img h-100 rounded-pill">
+                                            </a>
+                                        @endif
+                                    </div>
+                                    <div class="">
+                                        @if($post->original_post===null)
+                                            <a href="{{ route('profile',$post->owner->id) }}"
+                                               class="h4">{{ $post->owner->name }}</a>
+                                            <h6>{{ $post->created_at->diffForHumans() }}</h6>
+                                        @else
+                                            <a href="{{ route('profile',$post->owner->id) }}"
+                                               class="h4">{{ $post->owner->name }}</a>
+                                            <p class="mb-0"> shared {{$post->original_post->owner->name}}'s post</p>
+                                            <h6>{{ $post->created_at->diffForHumans() }}</h6>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="mr-2 post-dropdown-container">
+                                    <form action="{{ route("post.destroy", $post->id) }}"
+                                          id="del{{ $post->id }}"
+                                          method="post">
+                                        @csrf
+                                        @method("delete")
+                                    </form>
+                                    <div class="dropdown my-auto">
+                                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right"
+                                             aria-labelledby="dropdownMenuButton">
+                                            <a href="{{ route("post.show",$post->id) }}" class="dropdown-item">View
+                                                Post</a>
+                                            @if(Auth::id()===$post->user_id)
+                                                <a href="{{ route('post.edit',$post->id) }}"
+                                                   class="dropdown-item">Edit</a>
+                                                <button class="dropdown-item" type="submit" form="del{{ $post->id }}">
+                                                    Delete
+                                                </button>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body py-0">
+                            <h5>{{ $post->title }}</h5>
+                            @if(strlen($post->description)>190)
+                                <p class="">{{ substr($post->description,0,190) }} ...&nbsp;&nbsp; <a
+                                        href="{{ route("post.show",$post) }}">See
+                                        more</a></p>
+                            @else
+                                <p>{{ $post->description }}</p>
+                            @endif
+                        </div>
+                        @if(count($post->images)==1)
+                            <img class="card-img-top" src="{{ asset("storage/post/".$post->images[0]->filename) }}"
+                                 alt="Card image cap">
+                        @elseif(count($post->images)>1)
+                            <div class="post-carousel">
+                                @foreach($post->images as $image)
+                                    <div class="">
+                                        <img class="card-img" src="{{ asset("storage/post/".$image->filename) }}"
+                                             alt="Card image cap">
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                        <div class="p-2 card-body">
+                            <div class="row justify-content-between align-items-center">
+                                <div class="col-4 text-center">
+                                    <button class="btn w-100" form="like{{ $post->id }}">
+                                        <i class="fa-lg {{ $post->total_likes->where("user_id",Auth::id())->count()===1?"fas":"far" }} fa-thumbs-up mr-2"></i>{{ $post->total_likes->count() }}
+                                        {{ $post->total_likes->count()>1?"Likes":"Like" }}
+                                    </button>
+                                    @error("post_id")
+                                    <div role="alert" aria-live="assertive" aria-atomic="true" class="toast fixedToast"
+                                         data-autohide="false">
+                                        <div class="toast-header">
+                                            <strong>{{ $message }}</strong>
+                                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @enderror
+                                    <form
+                                        action="{{ $post->total_likes->where("user_id",Auth::id())->count()==1?route("like.unlike",$post->id):route("like.like") }}"
+                                        id="like{{$post->id}}" method="post">
+                                        @csrf
+                                        <input type="text" name="post_id" value="{{ $post->id  }}" class="d-none">
+                                    </form>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <a class="btn w-100" href="{{ route('post.show',$post->id) }}">
+                                        <i class="far fa-lg fa-comment-alt mr-2"></i>{{ $post->comments->count() }}  {{ $post->comments->count()>1?"Comments": "Comment"}}
+                                    </a>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <button class="btn w-100" form="share{{$post->id}}">
+                                        <i class="fas fa-lg fa-share mr-2"></i> Share
+                                    </button>
+                                    <form action="{{ route('post.share',$post->id) }}" id="share{{$post->id}}"
+                                          method="post">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 @endforeach
             </div>
             <div class="col-4">

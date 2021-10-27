@@ -58,6 +58,14 @@ class PostController extends Controller
         return view("post.show", compact('post'));
     }
 
+    public function share(Post $post){
+        $newPost = new Post();
+        $newPost->user_id = Auth::id();
+        $newPost->original_post_id = $post->id;
+        $newPost->save();
+        return redirect()->route("newsfeed");
+    }
+
     /**
      * @param Post $post
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
