@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Rules\PostExistsRule;
+use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,7 +35,7 @@ class CommentController extends Controller
     }
 
     public function edit(Comment $comment){
-        //
+        return $comment;
     }
 
     public function update(Request $request, Comment $comment){
@@ -42,6 +43,10 @@ class CommentController extends Controller
     }
 
     public function destroy(Comment $comment){
-        //
+        if (Gate::allows("comment_owner", $comment)) {
+            $comment->delete();
+            return back()->with("message", "Comment Deleted");
+        }
+        return back()->with("message", "Cannot delete the message");
     }
 }

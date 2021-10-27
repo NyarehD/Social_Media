@@ -15881,13 +15881,13 @@ a.text-dark:focus {
   display: none;
 }
 
-.postIdToast {
+.fixedToast {
   position: fixed;
   bottom: 2vw;
   right: 2vw;
 }
 
-.postIdToast img {
+.fixedToast img {
   width: 100%;
 }
 
@@ -15928,6 +15928,14 @@ a.text-dark:focus {
 
 .show-post .comments div.overflow-auto {
   height: 100%;
+}
+
+.show-post .comments .comment .comment-options {
+  display: none;
+}
+
+.show-post .comments .comment:hover .comment-options {
+  display: block;
 }
 
 .show-post .comment-profile-img {

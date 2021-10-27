@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Comment;
 use App\Post;
 use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -26,11 +27,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(){
         $this->registerPolicies();
-        Gate::define("post_owner", function($user, $post){
-            if (Auth::id() == $post->user_id && $user->id == $post->user_id) {
-                return true;
-            }
-            return false;
+        Gate::define("post_owner", function(User $user, Post $post){
+            return Auth::id() == $post->user_id && $user->id == $post->user_id;
+        });
+        Gate::define("comment_owner", function(User $user, Comment $comment){
+            return Auth::id() === $comment->user_id && $user->id === $comment->user_id;
         });
         //
     }

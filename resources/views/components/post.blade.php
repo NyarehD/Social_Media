@@ -54,7 +54,7 @@
     @if(count($post->images)==1)
         <img class="card-img-top" src="{{ asset("storage/post/".$post->images[0]->filename) }}"
              alt="Card image cap">
-    @else
+    @elseif(count($post->images)>1)
         <div class="post-carousel">
             @foreach($post->images as $image)
                 <div class="">
@@ -67,11 +67,11 @@
         <div class="row justify-content-between align-items-center">
             <div class="col-4 text-center">
                 <button class="btn w-100" form="like{{ $post->id }}">
-                    <i class="fa-lg {{ $post->total_likes->where("user_id",Auth::id())->count()===1?"fas":"far" }} fa-thumbs-up"></i>{{ $post->total_likes->count() }}
+                    <i class="fa-lg {{ $post->total_likes->where("user_id",Auth::id())->count()===1?"fas":"far" }} fa-thumbs-up mr-2"></i>{{ $post->total_likes->count() }}
                     {{ $post->total_likes->count()>1?"Likes":"Like" }}
                 </button>
                 @error("post_id")
-                <div role="alert" aria-live="assertive" aria-atomic="true" class="toast postIdToast"
+                <div role="alert" aria-live="assertive" aria-atomic="true" class="toast fixedToast"
                      data-autohide="false">
                     <div class="toast-header">
                         <strong>{{ $message }}</strong>
@@ -81,7 +81,6 @@
                     </div>
                 </div>
                 @enderror
-
                 <form
                     action="{{ $post->total_likes->where("user_id",Auth::id())->count()==1?route("like.unlike",$post->id):route("like.like") }}"
                     id="like{{$post->id}}" method="post">
@@ -90,13 +89,13 @@
                 </form>
             </div>
             <div class="col-4 text-center">
-                <button class="btn w-100">
-                    <i class="far fa-lg fa-comment-alt"></i> Comment
-                </button>
+                <a class="btn w-100" href="{{ route('post.show',$post->id) }}">
+                    <i class="far fa-lg fa-comment-alt mr-2"></i>{{ $post->comments->count() }}  {{ $post->comments->count()>1?"Comments": "Comment"}}
+                </a>
             </div>
             <div class="col-4 text-center">
                 <button class="btn w-100">
-                    <i class="fas fa-lg fa-share"></i> Share
+                    <i class="fas fa-lg fa-share mr-2"></i> Share
                 </button>
             </div>
         </div>
