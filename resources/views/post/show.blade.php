@@ -25,19 +25,36 @@
         <div class="container-fluid p-0 show-post h-100">
             <div class="row">
                 <div class="col-9 p-0 bg-light overflow-hidden">
-                    @if(count($post->images)==1)
-                        <img class="card-img-top show-post-not-carousel"
-                             src="{{ asset("storage/post/".$post->images[0]->filename) }}"
-                             alt="Card image cap">
+                    @if($post->original_post==null)
+                        @if(count($post->images)==1)
+                            <img class="card-img-top show-post-not-carousel"
+                                 src="{{ asset("storage/post/".$post->images[0]->filename) }}"
+                                 alt="Card image cap">
+                        @else
+                            <div class="show-post-carousel">
+                                @foreach($post->images as $image)
+                                    <div class="">
+                                        <img class="card-img" src="{{ asset("storage/post/".$image->filename) }}"
+                                             alt="Card image cap">
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     @else
-                        <div class="show-post-carousel">
-                            @foreach($post->images as $image)
-                                <div class="">
-                                    <img class="card-img" src="{{ asset("storage/post/".$image->filename) }}"
-                                         alt="Card image cap">
-                                </div>
-                            @endforeach
-                        </div>
+                        @if(count($post->images)==1)
+                            <img class="card-img-top show-post-not-carousel"
+                                 src="{{ asset("storage/post/".$post->original_post->images[0]->filename) }}"
+                                 alt="Card image cap">
+                        @else
+                            <div class="show-post-carousel">
+                                @foreach($post->original_post->images as $image)
+                                    <div class="">
+                                        <img class="card-img" src="{{ asset("storage/post/".$image->filename) }}"
+                                             alt="Card image cap">
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     @endif
                 </div>
                 <div class="col-3 py-2 border-right card overflow-auto vh-100">
@@ -116,9 +133,13 @@
                             </button>
                         </div>
                         <div class="col-4 text-center p-0">
-                            <button class="btn w-100">
-                                <i class="fas fa-lg fa-share"></i> Share
+                            <button class="btn w-100" form="share{{$post->id}}">
+                                <i class="fas fa-lg fa-share mr-2"></i> Share
                             </button>
+                            <form action="{{ route('post.share',$post->id) }}" id="share{{$post->id}}"
+                                  method="post">
+                                @csrf
+                            </form>
                         </div>
                     </div>
                     <div class="row comments-container">

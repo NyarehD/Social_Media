@@ -33,6 +33,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define("comment_owner", function(User $user, Comment $comment){
             return Auth::id() === $comment->user_id && $user->id === $comment->user_id;
         });
-        //
+        Gate::define("is_original", function(User $user, Post $post){
+            return $post->original_post_id == null;
+        });
     }
 }
