@@ -5,90 +5,63 @@
             <div class="col-8" id="newsfeed-post-container">
                 @foreach($posts as $post)
                     <div class="card post mb-3" id="{{ $post->id }}">
+                        <x-post-profile-detail :post=$post></x-post-profile-detail>
+                        {{--                        Show the post description--}}
                         <div class="card-body py-1">
-                            <div class="row justify-content-between align-items-center px-3 py-2">
-                                <div class="d-flex align-items-center">
-                                    <div class="mr-2">
-                                        @if($post->original_post_id===null)
-                                            <a href="{{ route('profile',$post->owner->id) }}" class="">
-                                                <img
-                                                    src="{{ asset("storage/profile-picture/".$post->owner->profile_picture) }}"
-                                                    alt=""
-                                                    class="post-profile-img h-100 rounded-pill">
-                                            </a>
-                                        @else
-                                            <a href="{{ route('profile',$post->original_post->owner->id) }}" class="">
-                                                <img
-                                                    src="{{ asset("storage/profile-picture/".$post->original_post->owner->profile_picture) }}"
-                                                    alt=""
-                                                    class="post-profile-img h-100 rounded-pill">
-                                            </a>
-                                        @endif
-                                    </div>
-                                    <div class="">
-                                        @if($post->original_post===null)
-                                            <a href="{{ route('profile',$post->owner->id) }}"
-                                               class="h4">{{ $post->owner->name }}</a>
-                                            <h6>{{ $post->created_at->diffForHumans() }}</h6>
-                                        @else
-                                            <a href="{{ route('profile',$post->owner->id) }}"
-                                               class="h4">{{ $post->owner->name }}</a>
-                                            <p class="mb-0"> shared {{$post->original_post->owner->name}}'s post</p>
-                                            <h6>{{ $post->created_at->diffForHumans() }}</h6>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="mr-2 post-dropdown-container">
-                                    <form action="{{ route("post.destroy", $post->id) }}"
-                                          id="del{{ $post->id }}"
-                                          method="post">
-                                        @csrf
-                                        @method("delete")
-                                    </form>
-                                    <div class="dropdown my-auto">
-                                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right"
-                                             aria-labelledby="dropdownMenuButton">
-                                            <a href="{{ route("post.show",$post->id) }}" class="dropdown-item">View
-                                                Post</a>
-                                            @if(Auth::id()===$post->user_id)
-                                                <a href="{{ route('post.edit',$post->id) }}"
-                                                   class="dropdown-item">Edit</a>
-                                                <button class="dropdown-item" type="submit" form="del{{ $post->id }}">
-                                                    Delete
-                                                </button>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body py-0">
-                            <h5>{{ $post->title }}</h5>
-                            @if(strlen($post->description)>190)
-                                <p class="">{{ substr($post->description,0,190) }} ...&nbsp;&nbsp; <a
+                            <h4>{{ $post->title }}</h4>
+                            @isset($post->description   )
+                                <p class="">{{ substr($post->description,1,190) }}
+                                    ...&nbsp;&nbsp; <a
                                         href="{{ route("post.show",$post) }}">See
-                                        more</a></p>
-                            @else
-                                <p>{{ $post->description }}</p>
-                            @endif
+                                        more</a>
+                                </p>
+                            @endisset
                         </div>
-                        @if(count($post->images)==1)
-                            <img class="card-img-top" src="{{ asset("storage/post/".$post->images[0]->filename) }}"
-                                 alt="Card image cap">
-                        @elseif(count($post->images)>1)
-                            <div class="post-carousel">
-                                @foreach($post->images as $image)
-                                    <div class="">
-                                        <img class="card-img" src="{{ asset("storage/post/".$image->filename) }}"
-                                             alt="Card image cap">
-                                    </div>
-                                @endforeach
+                        {{--If the post is a original post, show the photoes of the post--}}
+                        @empty($post->original_post_id)
+                            @if(count($post->images)==1)
+                                <img class="card-img-top" src="{{ asset("storage/post/".$post->images[0]->filename) }}"
+                                     alt="Card image cap">
+                            @elseif(count($post->images)>1)
+                                <div class="post-carousel">
+                                    @foreach($post->images as $image)
+                                        <div class="">
+                                            <img class="card-img" src="{{ asset("storage/post/".$image->filename) }}"
+                                                 alt="Card image cap">
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        @else
+                            @if(count($post->original_post->images)==1)
+                                <img class="card-img-top"
+                                     src="{{ asset("storage/post/".$post->original_post->images[0]->filename) }}"
+                                     alt="Card image cap">
+                            @elseif(count($post->original_post->images)>1)
+                                <div class="post-carousel">
+                                    @foreach($post->original_post->images as $image)
+                                        <div class="">
+                                            <img class="card-img" src="{{ asset("storage/post/".$image->filename) }}"
+                                                 alt="Card image cap">
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        @endempty
+                        {{--                        If the post is shared post, show the original post details--}}
+                        @isset($post->original_post_id)
+                            <div class="card mx-2 mb-2 rounded-bottom">
+                                <x-post-profile-detail :post="$post->original_post"></x-post-profile-detail>
+                                <div class="card-body py-1">
+                                    <h4>{{ $post->original_post->title }}</h4>
+                                    <p class="">{{ substr($post->original_post->description,1,190) }}
+                                        ...&nbsp;&nbsp; <a
+                                            href="{{ route("post.show",$post->original_post->id) }}">See
+                                            more</a>
+                                    </p>
+                                </div>
                             </div>
-                        @endif
+                        @endisset
                         <div class="p-2 card-body">
                             <div class="row justify-content-between align-items-center">
                                 <div class="col-4 text-center">
@@ -121,18 +94,59 @@
                                     </a>
                                 </div>
                                 <div class="col-4 text-center">
-                                    <button class="btn w-100" form="share{{$post->id}}">
+                                    <!-- Button trigger modal-->
+                                    <button type="button" class="btn w-100" data-toggle="modal"
+                                            data-target="#shareModal{{$post->id}}">
                                         <i class="fas fa-lg fa-share mr-2"></i> Share
                                     </button>
-                                    <form action="{{ route('post.share',$post->id) }}" id="share{{$post->id}}"
-                                          method="post">
-                                        @csrf
-                                    </form>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="shareModal{{$post->id}}" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">
+                                                        Share {{$post->owner->name }}'s post</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ route('post.share',$post->id) }}"
+                                                          id="share{{$post->id}}"
+                                                          method="post">
+                                                        @csrf
+                                                        <div class="form-group">
+                                                            <label for="title" class="h3 float-left">Title</label>
+                                                            <input type="text" class="form-control"
+                                                                   name="title">
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="description"
+                                                                   class="h3 float-left">Description</label>
+                                                            <input type="text" class="form-control"
+                                                                   name="description">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Cancel
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary"
+                                                            form="share{{$post->id}}">
+                                                        Share <i class="fas fa-lg fa-share"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 @endforeach
             </div>
             <div class="col-4">
@@ -140,6 +154,23 @@
             </div>
         </div>
     </div>
+    @if(session("message"))
+        <div role="alert" aria-live="assertive" aria-atomic="true" class="toast fixedToast"
+             data-autohide="false">
+            <div class="toast-header">
+                <strong>{{ session("message")}}</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    @endif
+    @error("title")
+    <x-error-toast message="{{$message}}"></x-error-toast>
+    @enderror
+    @error("description")
+    <x-error-toast message="{{$message}}"></x-error-toast>
+    @enderror
 @endsection
 @section("script")
     <script>

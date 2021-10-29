@@ -58,12 +58,25 @@ class PostController extends Controller
         return view("post.show", compact('post'));
     }
 
-    public function share(Post $post){
-        $newPost = new Post();
-        $newPost->user_id = Auth::id();
-        $newPost->original_post_id = $post->id;
-        $newPost->save();
-        return redirect()->route("newsfeed");
+    /**
+     * @param Post $post
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function share(Request $request, Post $post){
+        $request->validate([
+            "title" => "nullable|string",
+            "description" => "nullable|string"
+        ]);
+        if (Gate::allows("is_original", $post)) {
+            $newPost = new Post();
+            $newPost->user_id = Auth::id();
+            $newPost->original_post_id = $post->id;
+            $newPost->title = $request->title;
+            $newPost->description = $request->description;
+            $newPost->save();
+            return redirect()->route("newsfeed")->with("message", "Shared successfully");
+        }
+        return redirect()->back()->with("message", "You cannot not share a shared post");
     }
 
     /**

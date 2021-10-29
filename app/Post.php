@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $fillable = ["title", "description"];
+
     public $with = ["images", "owner", "total_likes", "comments", "original_post"];
 
     public function images(){
