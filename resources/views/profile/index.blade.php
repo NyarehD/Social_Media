@@ -20,9 +20,15 @@
                                     <div class="row align-items-center">
                                         <div class="col-10">
                                             <div class="social-link d-inline">
-                                                <a href="#" class="mr-2">Facebook</a>
-                                                <a href="#" class="mr-2">Github</a>
-                                                <a href="#" class="mr-2">Twitter</a>
+                                                @isset($user->facebook_link)
+                                                    <a href="{{$user->facebook_link}}" class="mr-2">Facebook</a>
+                                                @endisset
+                                                @isset($user->twitter_link)
+                                                    <a href="{{$user->twitter_link}}" class="mr-2">Twitter</a>
+                                                @endisset
+                                                @isset($user->github_link)
+                                                    <a href="{{$user->github_link}}" class="mr-2">Github</a>
+                                                @endisset
                                             </div>
                                             <h6 class=""><i class="fas fa-birthday-cake mr-2 text-primary"></i>Joined
                                                 at {{ $user->created_at->format("d M Y") }} </h6>
@@ -64,6 +70,17 @@
             </div>
         </div>
     </div>
+    @if(session("message"))
+        <div role="alert" aria-live="assertive" aria-atomic="true" class="toast fixedToast"
+             data-autohide="false">
+            <div class="toast-header">
+                <strong>{{ session("message")}}</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    @endif
 @endsection
 @section("script")
     <script>
