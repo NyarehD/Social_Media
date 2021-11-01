@@ -35,8 +35,8 @@
                     <a href="{{ route("post.show",$post->id) }}" class="dropdown-item">View
                         Post</a>
                     @if(Auth::id()===$post->user_id)
-                        <form action="{{ route("post.destroy", $post->original_post->id) }}"
-                              id="del{{ $post->original_post->id }}"
+                        <form action="{{ route("post.destroy", $post->id) }}"
+                              id="del{{ $post->id }}"
                               method="post">
                             @csrf
                             @method("delete")
