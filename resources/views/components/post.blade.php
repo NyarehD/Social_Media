@@ -66,7 +66,7 @@
     <div class="p-2 card-body">
         <div class="row justify-content-between align-items-center">
             <div class="col-4 text-center">
-                <button class="btn w-100" form="like{{ $post->id }}">
+                <button class="btn btn-block" form="like{{ $post->id }}">
                     <i class="fa-lg {{ $post->total_likes->where("user_id",Auth::id())->count()===1?"fas":"far" }} fa-thumbs-up mr-2"></i>{{ $post->total_likes->count() }}
                     {{ $post->total_likes->count()>1?"Likes":"Like" }}
                 </button>
@@ -89,12 +89,12 @@
                 </form>
             </div>
             <div class="col-4 text-center">
-                <a class="btn w-100" href="{{ route('post.show',$post->id) }}">
+                <a class="btn btn-block" href="{{ route('post.show',$post->id) }}">
                     <i class="far fa-lg fa-comment-alt mr-2"></i>{{ $post->comments->count() }}  {{ $post->comments->count()>1?"Comments": "Comment"}}
                 </a>
             </div>
             <div class="col-4 text-center">
-                <button class="btn w-100" form="share{{$post->id}}">
+                <button class="btn btn-block" form="share{{$post->id}}">
                     <i class="fas fa-lg fa-share mr-2"></i> Share
                 </button>
                 <form action="{{ route('post.share',$post->id) }}" id="share{{$post->id}}" method="post">
