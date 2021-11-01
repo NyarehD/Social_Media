@@ -17,7 +17,8 @@
                                     Profile
                                     Picture
                                 </button>
-                                <form action="{{ route("profile.pictureUpdate") }}" id="profile-picture-form" method="post" enctype="multipart/form-data">
+                                <form action="{{ route("profile.pictureUpdate") }}" id="profile-picture-form"
+                                      method="post" enctype="multipart/form-data">
                                     @csrf
                                     <input type="file" name="profile_picture" id="profile-picture-input" class="d-none"
                                            accept="image/jpeg,image/png">
