@@ -2,8 +2,8 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-10">
-                <div class="card mb-3">
+            <div class="col-10 mb-3">
+                <div class="card">
                     <p class="card-title h3 text-center my-3 font-weight-bold">Profile Edit</p>
                     <div class="row g-0">
                         <div class="col-md-4">
@@ -82,8 +82,64 @@
                     </div>
                 </div>
             </div>
+            <div class="col-10">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Social Links</h4>
+                                <form action="{{ route('profile.socialUpdate') }}" method="post">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="facebook">Facebook Link</label>
+                                        <input type="text" id="facebook" name="facebook_link"
+                                               class="form-control @error("facebook_link") is-invalid @enderror"
+                                               value="{{ old("facebook_link")? old("facebook_link"):Auth::user()->facebook_link}}">
+                                        @error("facebook_link")
+                                        <span class="text-danger w-100 d-block">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="github">Github Link</label>
+                                        <input type="text" id="github" name="github_link"
+                                               class="form-control @error("github_link") is-invalid @enderror"
+                                               value="{{ old("github_link")? old("github_link"):Auth::user()->github_link}}">
+                                        @error("github_link")
+                                        <span class="text-danger w-100 d-block">{{ $message }}</span>
+                                        @enderror
+                                        @error("*")
+                                        <span class="text-danger w-100 d-block">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="twitter">Twitter Link</label>
+                                        <input type="text" id="twitter" name="twitter_link"
+                                               class="form-control @error("twitter_link") is-invalid @enderror"
+                                               value="{{ old("twitter_link")? old("twitter_link"):Auth::user()->twitter_link}}">
+                                        @error("twitter_link")
+                                        <span class="text-danger w-100 d-block">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <button class="btn btn-block btn-primary">Update</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    @if(session("message"))
+        <div role="alert" aria-live="assertive" aria-atomic="true" class="toast fixedToast"
+             data-autohide="false">
+            <div class="toast-header">
+                <strong>{{ session("message")}}</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    @endif
 @endsection
 @section("script")
     <script>

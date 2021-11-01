@@ -48,7 +48,7 @@ class ProfileController extends Controller
         $user->profile_picture = $newName;
         $user->update();
 
-        return redirect()->route("profile.edit");
+        return redirect()->route("profile.edit")->with("message", "Profile picture is updated");
     }
 
     /**
@@ -66,7 +66,30 @@ class ProfileController extends Controller
         $user->email = $request->email;
         $user->bio = $request->bio;
         $user->update();
-        return redirect()->route("profile", Auth::id());
+        return redirect()->route("profile", Auth::id())->with("Profile updated");
     }
 
+    public function profileSocialUpdate(Request $request){
+        $request->validate([
+            "facebook_link" => "nullable|url",
+            "github_link" => "nullable|url",
+            "twitter_link" => "nullable|url"
+        ], [
+            "facebook_link" => "Facebook link is invalid",
+            "github_link" => "Github link is invalid",
+            "twitter_link" => "Twitter link is invalid"
+        ]);
+        $user = User::find(Auth::id());
+        if ($request->filled("facebook_link")) {
+            $user->facebook_link = $request->facebook_link;
+        }
+        if ($request->filled("twitter_link")) {
+            $user->twitter_link = $request->twitter_link;
+        }
+        if ($request->filled("github_link")) {
+            $user->github_link = $request->github_link;
+        }
+        $user->update();
+        return redirect()->route("profile", Auth::id())->with("message", "Updated social links");
+    }
 }
