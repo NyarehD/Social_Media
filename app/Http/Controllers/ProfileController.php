@@ -58,12 +58,10 @@ class ProfileController extends Controller
     public function profileUpdate(Request $request){
         $request->validate([
             "name" => "required|string|min:1|max:100",
-            "email" => "required|email",
             "bio" => "required|string|min:10|max:255"
         ]);
-        $user = User::find(Auth::id());
+        $user = Auth::user();
         $user->name = $request->name;
-        $user->email = $request->email;
         $user->bio = $request->bio;
         $user->update();
         return redirect()->route("profile", Auth::id())->with("Profile updated");
@@ -79,7 +77,7 @@ class ProfileController extends Controller
             "github_link" => "Github link is invalid",
             "twitter_link" => "Twitter link is invalid"
         ]);
-        $user = User::find(Auth::id());
+        $user = Auth::user();
         if ($request->filled("facebook_link")) {
             $user->facebook_link = $request->facebook_link;
         }
@@ -90,6 +88,19 @@ class ProfileController extends Controller
             $user->github_link = $request->github_link;
         }
         $user->update();
-        return redirect()->route("profile", Auth::id())->with("message", "Updated social links");
+        return redirect()->back()->with("message", "Updated social links");
+    }
+
+    public function profileEmailUpdate(Request $request){
+        $request->validate([
+            "email" => "email|required"
+        ]);
+        $user = Auth::user();
+        $user->email = $request->email;
+        if ($user->isDirty()) {
+            $user->update();
+            return redirect()->back()->with("message", "Updated Email");
+        }
+        return redirect()->back()->with("message", "New email is the same as previous email");
     }
 }

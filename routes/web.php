@@ -35,5 +35,6 @@ Route::middleware("auth")->group(function(){
         Route::post("/edit", "ProfileController@profileUpdate")->name("profile.update");
         Route::post("/edit/profile-picture", "ProfileController@profilePictureUpdate")->name("profile.pictureUpdate");
         Route::post("/edit/social", [ProfileController::class, "profileSocialUpdate"])->name("profile.socialUpdate");
+        Route::post("/edit/email", [ProfileController::class, "profileEmailUpdate"])->name("profile.emailUpdate");
     });
 });
