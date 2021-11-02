@@ -111,7 +111,7 @@
                                                    class="form-control @error("twitter_link") is-invalid @enderror"
                                                    value="{{ old("twitter_link")? old("twitter_link"):auth()->user()->twitter_link}}">
                                         </div>
-                                        @error("github_link")
+                                        @error("twitter_link")
                                         <span class="text-danger w-100 d-block">{{ $message }}</span>
                                         @enderror
                                     </div>

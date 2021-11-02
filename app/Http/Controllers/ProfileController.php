@@ -69,24 +69,18 @@ class ProfileController extends Controller
 
     public function profileSocialUpdate(Request $request){
         $request->validate([
-            "facebook_link" => "nullable|url",
-            "github_link" => "nullable|url",
-            "twitter_link" => "nullable|url"
+            "facebook_link" => ["nullable", "url", "regex:/(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/m"],
+            "github_link" => ["nullable", "url", "regex:/(?:(?:http|https):\/\/)?(?:www.)?github.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/m"],
+            "twitter_link" => ["nullable", "url", "regex:/(?:(?:http|https):\/\/)?(?:www.)?twitter.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/m"]
         ], [
-            "facebook_link" => "Facebook link is invalid",
+            "facebook_link.*" => "Facebook link is invalid",
             "github_link" => "Github link is invalid",
-            "twitter_link" => "Twitter link is invalid"
+            "twitter_link.*" => "Twitter link is invalid"
         ]);
         $user = Auth::user();
-        if ($request->filled("facebook_link")) {
-            $user->facebook_link = $request->facebook_link;
-        }
-        if ($request->filled("twitter_link")) {
-            $user->twitter_link = $request->twitter_link;
-        }
-        if ($request->filled("github_link")) {
-            $user->github_link = $request->github_link;
-        }
+        $user->facebook_link = $request->facebook_link;
+        $user->twitter_link = $request->twitter_link;
+        $user->github_link = $request->github_link;
         $user->update();
         return redirect()->back()->with("message", "Updated social links");
     }
