@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-10 mb-3">
+            <div class="col-12 mb-3">
                 <div class="card">
                     <p class="card-title h3 text-center my-3 font-weight-bold">Profile Edit</p>
                     <div class="row g-0">
@@ -35,7 +35,7 @@
                                     <form action="{{ route("profile.update") }}" class="" method="post"
                                           enctype="multipart/form-data">
                                         @csrf
-                                        <div class="d-flex justify-content-between align-items-start h-60">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
                                             <label for="email" class="h4">Name</label>
                                             <div class="w-75">
                                                 <input type="text"
@@ -47,23 +47,9 @@
                                                 @enderror
                                             </div>
                                         </div>
-
-                                        <div class="d-flex justify-content-between align-items-start h-60">
-                                            <label for="email" class="h4">Email</label>
-                                            <div class="w-75">
-                                                <input type="text"
-                                                       class="form-control w-100 @error("email") is-invalid @enderror"
-                                                       id="email" name="email"
-                                                       value="{{ old("email")? old("email"):Auth::user()->email }}">
-                                                @error("email")
-                                                <span class="text-danger w-100 d-block">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <div style="height: 160px">
+                                        <div style="">
                                             <label for="bio" class="h4">Bio</label>
-                                            <textarea name="bio" id="bio" cols="30" rows="4"
+                                            <textarea name="bio" id="bio" cols="30" rows="7"
                                                       class="form-control mb-2">{{ old("bio") ? old("bio") : ( Auth::user()->bio ? Auth::user()->bio: "Add your bio here ...") }}
                                             </textarea>
                                             @error("bio")
@@ -82,7 +68,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-10">
+            <div class="col-12">
                 <div class="row">
                     <div class="col-6">
                         <div class="card">
@@ -91,36 +77,64 @@
                                 <form action="{{ route('profile.socialUpdate') }}" method="post">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="facebook">Facebook Link</label>
-                                        <input type="text" id="facebook" name="facebook_link"
-                                               class="form-control @error("facebook_link") is-invalid @enderror"
-                                               value="{{ old("facebook_link")? old("facebook_link"):Auth::user()->facebook_link}}">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="">Facebook</span>
+                                            </div>
+                                            <input type="text" id="facebook" name="facebook_link"
+                                                   class="form-control @error("facebook_link") is-invalid @enderror"
+                                                   value="{{ old("facebook_link")? old("facebook_link"):Auth::user()->facebook_link}}">
+                                        </div>
                                         @error("facebook_link")
                                         <span class="text-danger w-100 d-block">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="github">Github Link</label>
-                                        <input type="text" id="github" name="github_link"
-                                               class="form-control @error("github_link") is-invalid @enderror"
-                                               value="{{ old("github_link")? old("github_link"):Auth::user()->github_link}}">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="">Github</span>
+                                            </div>
+                                            <input type="text" id="github" name="github_link"
+                                                   class="form-control @error("github_link") is-invalid @enderror"
+                                                   value="{{ old("github_link")? old("github_link"):auth()->user()->github_link}}">
+                                        </div>
                                         @error("github_link")
-                                        <span class="text-danger w-100 d-block">{{ $message }}</span>
-                                        @enderror
-                                        @error("*")
                                         <span class="text-danger w-100 d-block">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="twitter">Twitter Link</label>
-                                        <input type="text" id="twitter" name="twitter_link"
-                                               class="form-control @error("twitter_link") is-invalid @enderror"
-                                               value="{{ old("twitter_link")? old("twitter_link"):Auth::user()->twitter_link}}">
-                                        @error("twitter_link")
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="">Twitter</span>
+                                            </div>
+                                            <input type="text" id="twitter" name="twitter_link"
+                                                   class="form-control @error("twitter_link") is-invalid @enderror"
+                                                   value="{{ old("twitter_link")? old("twitter_link"):auth()->user()->twitter_link}}">
+                                        </div>
+                                        @error("github_link")
                                         <span class="text-danger w-100 d-block">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <button class="btn btn-block btn-primary">Update</button>
+                                    <button class="btn btn-block btn-outline-primary">Update</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <label class="card-title h4" for="email">Email</label>
+                                <form action="{{ route('profile.emailUpdate') }}" class="" method="post">
+                                    @csrf
+                                    <div class="input-group mb-3">
+                                        <input type="text" name="email" id="email"
+                                               value="{{old("email")? old("email"):Auth::user()->email }}"
+                                               class="form-control">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-warning" type="submit">Update Email
+                                            </button>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
