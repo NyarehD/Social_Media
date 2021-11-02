@@ -12,7 +12,7 @@
                                 class="img-fluid rounded-start" alt="..." id="profile-img">
                             <div class="">
                                 <button id="profile-picture-button" class="btn btn-primary w-100"><i
-                                        class="fas fa-edit"></i>
+                                        class="fas fa-edit" form="profile-picture-form"></i>
                                     Change
                                     Profile
                                     Picture
@@ -33,14 +33,15 @@
                             <div class="card-body p-0 px-3">
                                 <div class="">
                                     <form action="{{ route("profile.update") }}" class="" method="post"
-                                          enctype="multipart/form-data">
+                                          enctype="multipart/form-data" id="profileUpdate">
                                         @csrf
-                                        <div class="d-flex justify-content-between align-items-start mb-2">
-                                            <label for="email" class="h4">Name</label>
-                                            <div class="w-75">
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-3 h4">Name</label>
+                                            <div class="col-sm-9">
                                                 <input type="text"
-                                                       class="form-control w-100 @error("name") is-invalid @enderror"
+                                                       class="form-control @error("name") is-invalid @enderror "
                                                        id="name" name="name"
+                                                       placeholder="Name"
                                                        value="{{ old("name")? old("name"):Auth::user()->name }}">
                                                 @error("name")
                                                 <span class="text-danger w-100 d-block">{{ $message }}</span>
@@ -59,7 +60,7 @@
                                         <div class="d-flex justify-content-end">
                                             <a href="{{ route('profile',Auth::id()) }}"
                                                class="btn btn-outline-secondary mr-2">Back</a>
-                                            <button class="btn btn-primary ">Update</button>
+                                            <button class="btn btn-primary " form="profileUpdate">Update</button>
                                         </div>
                                     </form>
                                 </div>
@@ -74,7 +75,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Social Links</h4>
-                                <form action="{{ route('profile.socialUpdate') }}" method="post">
+                                <form action="{{ route('profile.socialUpdate') }}" method="post" id="socialLinksUpdate">
                                     @csrf
                                     <div class="form-group">
                                         <div class="input-group">
@@ -115,7 +116,8 @@
                                         <span class="text-danger w-100 d-block">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <button class="btn btn-block btn-outline-primary">Update</button>
+                                    <button class="btn btn-block btn-outline-primary" form="socialLinksUpdate">Update
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -123,18 +125,67 @@
                     <div class="col-6">
                         <div class="card">
                             <div class="card-body">
-                                <label class="card-title h4" for="email">Email</label>
-                                <form action="{{ route('profile.emailUpdate') }}" class="" method="post">
+                                <label class="card-title h4" for="email">Update Email</label>
+                                <form action="{{ route('profile.emailUpdate') }}" class="" method="post"
+                                      id="emailUpdate">
                                     @csrf
                                     <div class="input-group mb-3">
                                         <input type="text" name="email" id="email"
                                                value="{{old("email")? old("email"):Auth::user()->email }}"
                                                class="form-control">
                                         <div class="input-group-append">
-                                            <button class="btn btn-warning" type="submit">Update Email
+                                            <button class="btn btn-warning" type="submit" form="emailUpdate">Update
+                                                Email
                                             </button>
                                         </div>
                                     </div>
+                                </form>
+                                <label for="password" class="card-title h4">Update Password</label>
+                                <form action="{{ route('profile.passwordUpdate') }}" method="post" id="passwordUpdate">
+                                    @csrf
+                                    <div class="form-group row">
+                                        <label for="current-password" class="col-sm-4 col-form-label">Current
+                                            Password</label>
+                                        <div class="col-sm-8">
+                                            <input type="password"
+                                                   class="form-control @error("current_password") is-invalid @enderror"
+                                                   id="current-password"
+                                                   name="current_password"
+                                                   placeholder="Current Password" value="{{ old("current_password") }}">
+                                            @error("current_password")
+                                            <span class="text-danger w-100 d-block">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="new-password" class="col-sm-4 col-form-label">New Password</label>
+                                        <div class="col-sm-8">
+                                            <input type="password"
+                                                   class="form-control @error("new_password") is-invalid @enderror"
+                                                   id="new-password"
+                                                   name="new_password"
+                                                   placeholder="New Password" value="{{old("new_password")}}">
+                                            @error("new_password")
+                                            <span class="text-danger w-100 d-block">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="confirm-password" class="col-sm-4 col-form-label">Confirm
+                                            Password</label>
+                                        <div class="col-sm-8">
+                                            <input type="password"
+                                                   class="form-control @error("confirm_password") is-invalid @enderror"
+                                                   id="confirm-password"
+                                                   name="confirm_password"
+                                                   placeholder="Confirm Password" value="{{old("confirm_password")}}">
+                                            @error("confirm_password")
+                                            <span class="text-danger w-100 d-block">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-danger float-right" form="passwordUpdate">Update Password
+                                    </button>
                                 </form>
                             </div>
                         </div>

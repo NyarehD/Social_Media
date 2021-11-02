@@ -19,12 +19,13 @@
                         </div>
                         {{--If the post is a original post, show the photoes of the post--}}
                         @empty($post->original_post_id)
-                            @if(count($post->images)==1)
-                                <img class="card-img-top" src="{{ asset("storage/post/".$post->images[0]->filename) }}"
+                            @if(count($post->post_photos)==1)
+                                <img class="card-img-top"
+                                     src="{{ asset("storage/post/".$post->post_photos[0]->filename) }}"
                                      alt="Card image cap">
-                            @elseif(count($post->images)>1)
+                            @elseif(count($post->post_photos)>1)
                                 <div class="post-carousel">
-                                    @foreach($post->images as $image)
+                                    @foreach($post->post_photos as $image)
                                         <div class="">
                                             <img class="card-img" src="{{ asset("storage/post/".$image->filename) }}"
                                                  alt="Card image cap">
@@ -33,13 +34,13 @@
                                 </div>
                             @endif
                         @else
-                            @if(count($post->original_post->images)==1)
+                            @if(count($post->original_post->post_photos)==1)
                                 <img class="card-img-top"
-                                     src="{{ asset("storage/post/".$post->original_post->images[0]->filename) }}"
+                                     src="{{ asset("storage/post/".$post->original_post->post_photos[0]->filename) }}"
                                      alt="Card image cap">
-                            @elseif(count($post->original_post->images)>1)
+                            @elseif(count($post->original_post->post_photos)>1)
                                 <div class="post-carousel">
-                                    @foreach($post->original_post->images as $image)
+                                    @foreach($post->original_post->post_photos as $image)
                                         <div class="">
                                             <img class="card-img" src="{{ asset("storage/post/".$image->filename) }}"
                                                  alt="Card image cap">
