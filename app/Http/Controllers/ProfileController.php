@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Rules\MatchOldPasswordRule;
 use App\User;
+use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Storage;
+
 use Image;
 
 class ProfileController extends Controller
@@ -29,7 +33,7 @@ class ProfileController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function profilePictureUpdate(Request $request){
+    public function pictureUpdate(Request $request){
         $request->validate([
             "profile_picture" => "required|mimetypes:image/jpeg,image/png|file|max:2500"
         ]);
@@ -48,7 +52,7 @@ class ProfileController extends Controller
         $user->profile_picture = $newName;
         $user->update();
 
-        return redirect()->route("profile.edit")->with("message", "Profile picture is updated");
+        return redirect()->back()->with("message", "Profile picture is updated");
     }
 
     /**
@@ -64,10 +68,10 @@ class ProfileController extends Controller
         $user->name = $request->name;
         $user->bio = $request->bio;
         $user->update();
-        return redirect()->route("profile", Auth::id())->with("Profile updated");
+        return redirect()->back()->with("Profile updated");
     }
 
-    public function profileSocialUpdate(Request $request){
+    public function socialLinkUpdate(Request $request){
         $request->validate([
             "facebook_link" => ["nullable", "url", "regex:/(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/m"],
             "github_link" => ["nullable", "url", "regex:/(?:(?:http|https):\/\/)?(?:www.)?github.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/m"],
@@ -85,16 +89,28 @@ class ProfileController extends Controller
         return redirect()->back()->with("message", "Updated social links");
     }
 
-    public function profileEmailUpdate(Request $request){
+    public function emailUpdate(Request $request){
         $request->validate([
             "email" => "email|required"
         ]);
         $user = Auth::user();
         $user->email = $request->email;
-        if ($user->isDirty()) {
+        if ($user->isDirty("email")) {
             $user->update();
             return redirect()->back()->with("message", "Updated Email");
         }
         return redirect()->back()->with("message", "New email is the same as previous email");
+    }
+
+    public function passwordUpdate(Request $request){
+        $request->validate([
+            "current_password" => ["required", new MatchOldPasswordRule()],
+            "new_password" => "required|min:8|different:current_password",
+            "confirm_password" => "required|same:new_password|min:8"
+        ]);
+        $user = Auth::user();
+        $user->password = Hash::make($request->new_password);
+        $user->update();
+        return redirect()->back()->with("message", "Password is updated");
     }
 }

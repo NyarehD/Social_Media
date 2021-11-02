@@ -31,10 +31,13 @@ Route::middleware("auth")->group(function(){
 
     Route::prefix("/profile")->group(function(){
         Route::get('/id/{id}', "ProfileController@index")->name("profile");
-        Route::view("/edit", "profile.edit")->name("profile.edit");
-        Route::post("/edit", "ProfileController@profileUpdate")->name("profile.update");
-        Route::post("/edit/profile-picture", "ProfileController@profilePictureUpdate")->name("profile.pictureUpdate");
-        Route::post("/edit/social", [ProfileController::class, "profileSocialUpdate"])->name("profile.socialUpdate");
-        Route::post("/edit/email", [ProfileController::class, "profileEmailUpdate"])->name("profile.emailUpdate");
+        Route::prefix("/edit")->group(function(){
+            Route::view("", "profile.edit")->name("profile.edit");
+            Route::post("", "ProfileController@profileUpdate")->name("profile.update");
+            Route::post("/profile-picture", "ProfileController@pictureUpdate")->name("profile.pictureUpdate");
+            Route::post("/social", [ProfileController::class, "socialLinkUpdate"])->name("profile.socialUpdate");
+            Route::post("/email", [ProfileController::class, "emailUpdate"])->name("profile.emailUpdate");
+            Route::post("/password", [ProfileController::class, "passwordUpdate"])->name("profile.passwordUpdate");
+        });
     });
 });
