@@ -78,40 +78,28 @@
                                 <form action="{{ route('profile.socialUpdate') }}" method="post" id="socialLinksUpdate">
                                     @csrf
                                     <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="">Facebook</span>
-                                            </div>
-                                            <input type="text" id="facebook" name="facebook_link"
-                                                   class="form-control @error("facebook_link") is-invalid @enderror"
-                                                   value="{{ old("facebook_link")? old("facebook_link"):Auth::user()->facebook_link}}">
-                                        </div>
+                                        <label for="facebook" class="">Facebook</label>
+                                        <input type="text" id="facebook" name="facebook_link"
+                                               class="form-control @error("facebook_link") is-invalid @enderror"
+                                               value="{{ old("facebook_link")? old("facebook_link"):Auth::user()->facebook_link}}">
                                         @error("facebook_link")
                                         <span class="text-danger w-100 d-block">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="">Github</span>
-                                            </div>
-                                            <input type="text" id="github" name="github_link"
-                                                   class="form-control @error("github_link") is-invalid @enderror"
-                                                   value="{{ old("github_link")? old("github_link"):auth()->user()->github_link}}">
-                                        </div>
+                                        <label for="github">Github</label>
+                                        <input type="text" id="github" name="github_link"
+                                               class="form-control @error("github_link") is-invalid @enderror"
+                                               value="{{ old("github_link")? old("github_link"):auth()->user()->github_link}}">
                                         @error("github_link")
                                         <span class="text-danger w-100 d-block">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="">Twitter</span>
-                                            </div>
-                                            <input type="text" id="twitter" name="twitter_link"
-                                                   class="form-control @error("twitter_link") is-invalid @enderror"
-                                                   value="{{ old("twitter_link")? old("twitter_link"):auth()->user()->twitter_link}}">
-                                        </div>
+                                        <label for="twitter">Twitter</label>
+                                        <input type="text" id="twitter" name="twitter_link"
+                                               class="form-control @error("twitter_link") is-invalid @enderror"
+                                               value="{{ old("twitter_link")? old("twitter_link"):auth()->user()->twitter_link}}">
                                         @error("twitter_link")
                                         <span class="text-danger w-100 d-block">{{ $message }}</span>
                                         @enderror

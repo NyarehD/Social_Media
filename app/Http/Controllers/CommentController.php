@@ -39,7 +39,9 @@ class CommentController extends Controller
     }
 
     public function update(Request $request, Comment $comment){
-        //
+        $comment->comment = $request->edited_comment;
+        $comment->update();
+        return redirect()->back()->with("message", "Comment Updated");
     }
 
     public function destroy(Comment $comment){
