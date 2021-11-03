@@ -126,15 +126,18 @@
     }
 
     .comments-container {
-
         .comment {
             .comment-options {
-                display: none;
+                transition: opacity 0.5s ease-out;
+                opacity: 0;
+                height: 0;
+                overflow: hidden;
             }
 
             &:hover {
                 .comment-options {
-                    display: block;
+                    opacity: 1;
+                    height: auto;
                 }
             }
         }
@@ -145,6 +148,17 @@
         max-height: 50px;
     }
 
+}
+
+// To make the #comment-edit-input invisible in other places and visible under .comments
+#comment-edit-input {
+    display: none;
+}
+
+.comments {
+    #comment-edit-input {
+        display: block !important;
+    }
 }
 
 .back-newsfeed {

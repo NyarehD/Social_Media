@@ -74,7 +74,7 @@ class PostController extends Controller
             $newPost->title = $request->title;
             $newPost->description = $request->description;
             $newPost->save();
-            return redirect()->route("newsfeed")->with("message", "Shared successfully");
+            return redirect()->back()->with("message", "Shared successfully");
         }
         return redirect()->back()->with("message", "You cannot not share a shared post");
     }

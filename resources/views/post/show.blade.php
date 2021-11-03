@@ -26,13 +26,13 @@
             <div class="row">
                 <div class="col-9 p-0 bg-light overflow-hidden">
                     @if($post->original_post==null)
-                        @if(count($post->images)==1)
+                        @if(count($post->post_photos)==1)
                             <img class="card-img-top show-post-not-carousel"
-                                 src="{{ asset("storage/post/".$post->images[0]->filename) }}"
+                                 src="{{ asset("storage/post/".$post->post_photos[0]->filename) }}"
                                  alt="Card image cap">
                         @else
                             <div class="show-post-carousel">
-                                @foreach($post->images as $image)
+                                @foreach($post->post_photos as $image)
                                     <div class="">
                                         <img class="card-img" src="{{ asset("storage/post/".$image->filename) }}"
                                              alt="Card image cap">
@@ -41,13 +41,13 @@
                             </div>
                         @endif
                     @else
-                        @if(count($post->images)==1)
+                        @if(count($post->post_photos)==1)
                             <img class="card-img-top show-post-not-carousel"
                                  src="{{ asset("storage/post/".$post->original_post->images[0]->filename) }}"
                                  alt="Card image cap">
                         @else
                             <div class="show-post-carousel">
-                                @foreach($post->original_post->images as $image)
+                                @foreach($post->original_post->post_photos as $image)
                                     <div class="">
                                         <img class="card-img" src="{{ asset("storage/post/".$image->filename) }}"
                                              alt="Card image cap">
@@ -57,7 +57,7 @@
                         @endif
                     @endif
                 </div>
-                <div class="col-3 py-2 border-right card overflow-auto vh-100">
+                <div class="col-3 py-2  card overflow-auto vh-100">
                     <div class="row">
                         <div class="col-10 d-flex align-items-center mb-2">
                             <a href="{{ route('profile',$post->owner->id) }}" class="">
@@ -127,20 +127,64 @@
                                 <input type="text" name="post_id" value="{{ $post->id  }}" class="d-none">
                             </form>
                         </div>
-                        <div class="col-4 text-center p-0 border-right border-left">
+                        <div class="col-4 text-center p-0">
                             <button class="btn w-100">
                                 <i class="far fa-lg fa-comment-alt"></i> Comment
                             </button>
                         </div>
-                        <div class="col-4 text-center p-0">
-                            <button class="btn w-100" form="share{{$post->id}}">
-                                <i class="fas fa-lg fa-share mr-2"></i> Share
-                            </button>
-                            <form action="{{ route('post.share',$post->id) }}" id="share{{$post->id}}"
-                                  method="post">
-                                @csrf
-                            </form>
-                        </div>
+                        @empty($post->original_post)
+                            <div class="col-4 text-center">
+                                <!-- Button trigger modal-->
+                                <button type="button" class="btn w-100" data-toggle="modal"
+                                        data-target="#shareModal{{$post->id}}">
+                                    <i class="fas fa-lg fa-share mr-2"></i> Share
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="shareModal{{$post->id}}" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                    Share {{$post->owner->name }}'s post</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{ route('post.share',$post->id) }}"
+                                                      id="share{{$post->id}}"
+                                                      method="post">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="title" class="h3 float-left">Title</label>
+                                                        <input type="text" class="form-control"
+                                                               name="title">
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="description"
+                                                               class="h3 float-left">Description</label>
+                                                        <input type="text" class="form-control"
+                                                               name="description">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Cancel
+                                                </button>
+                                                <button type="submit" class="btn btn-primary"
+                                                        form="share{{$post->id}}">
+                                                    Share <i class="fas fa-lg fa-share"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endempty
                     </div>
                     <div class="row comments-container">
                         <div class="col-12">
@@ -157,7 +201,87 @@
                         </div>
                         <div class="col-12 overflow-auto comments h-100">
                             @foreach($post->comments as $comment)
-                                <x-comment :comment=$comment></x-comment>
+                                <div class="row h-auto mb-2 comment" id="comment-{{$comment->id}}">
+                                    <div class="col-3 p-0 pl-3">
+                                        <a href="{{ route('profile',$comment->owner->id) }}"
+                                           class="d-flex justify-content-start">
+                                            <img
+                                                src="{{asset("storage/profile-picture/".$comment->owner->profile_picture) }}"
+                                                alt=""
+                                                class="comment-profile-img h-100 rounded-pill">
+                                        </a>
+                                    </div>
+                                    <div class="col-9 px-0 pr-3">
+                                        <div class="">
+                                            <a class="mb-0 font-weight-bold"
+                                               href="{{ route('profile',$comment->owner->id) }}">{{ $comment->owner->name}}</a>
+                                            <p class="mb-0"
+                                               id="comment-text-{{$comment->id}}">{{ $comment->comment }}</p>
+                                            @if(Auth::id()==$comment->owner->id)
+                                                <div class="text-right comment-options">
+                                                    <!-- Button trigger modal for editing comment-->
+                                                    <button type="button"
+                                                            class="btn btn-link text-black-50 mr-2 comment-button"
+                                                            data-toggle="modal"
+                                                            data-target="#commentModal{{$comment->id}}">
+                                                        Edit
+                                                    </button>
+
+                                                    <!-- Modal for editing comment-->
+                                                    <div class="modal" id="commentModal{{$comment->id}}"
+                                                         tabindex="1" style="z-index: 100000000"
+                                                         role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                         aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLongTitle">
+                                                                        Edit Comment</h5>
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form
+                                                                        action="{{ route('comment.update',$comment->id) }}"
+                                                                        method="post"
+                                                                        id="commentUpdateForm{{$comment->id}}">
+                                                                        @csrf
+                                                                        @method("put")
+                                                                        <input type="text" name="edited_comment"
+                                                                               class="form-control"
+                                                                               value="{{$comment->comment}}">
+                                                                    </form>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Cancel
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-primary"
+                                                                            form="commentUpdateForm{{$comment->id}}">
+                                                                        Update Comment
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button class="text-black-50 btn btn-link"
+                                                            form="del{{$comment->id}}"
+                                                            onclick="return confirm('Are you sure you want to delete this comment?')">
+                                                        Delete
+                                                    </button>
+                                                    <form action="{{ route('comment.destroy',$comment->id) }}"
+                                                          class="d-none"
+                                                          id="del{{$comment->id}}" method="post">
+                                                        @csrf
+                                                        @method("delete")
+                                                    </form>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         </div>
                     </div>
@@ -179,12 +303,20 @@
                 </div>
             </div>
         @endif
-
     </main>
 </div>
 <script>
     $(document).ready(function () {
         $(".toast").toast("show");
+        $(".comment-button").click(function (el) {
+            let currentCommentId = $(this).attr("data-comment-id");
+            let input = $("#comment-edit-input")
+            let commentText = $(`#comment-text-${currentCommentId}`);
+            console.log(commentText.innerText)
+            input.val(commentText.innerHTML);
+            commentText.toggle();
+            input.insertAfter(`#comment-text-${currentCommentId}`)
+        })
     })
 </script>
 </body>
