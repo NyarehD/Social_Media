@@ -8,7 +8,7 @@ class Post extends Model
 {
     protected $fillable = ["title", "description"];
 
-    public $with = ["post_photos", "owner", "total_likes", "comments", "original_post"];
+    public $with = ["owner", "original_post", "post_photos", "total_likes", "comments"];
 
     public function post_photos(){
         return $this->hasMany(PostPhoto::class);

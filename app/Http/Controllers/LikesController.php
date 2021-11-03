@@ -29,7 +29,7 @@ class LikesController extends Controller
         $request->validate([
             "post_id" => [new PostExistsRule(), new UserHasLikedRule()],
         ]);
-        Like::where("user_id", Auth::id())->delete();
+        Like::where("user_id", Auth::id())->where("post_id", $request->post_id)->delete();
         return redirect()->back();
     }
 }

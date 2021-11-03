@@ -44,6 +44,7 @@ class ProfileController extends Controller
         }
 
         $newName = uniqid() . "_profile-picture." . $request->file("profile_picture")->getClientOriginalExtension();
+        // Using intervention packages to resize profile image to 350px
         $img = Image::make($request->file("profile_picture"));
         $img->fit(350);
         $img->save("storage/profile-picture/" . $newName);
@@ -56,6 +57,7 @@ class ProfileController extends Controller
     }
 
     /**
+     * Updating name and bio
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -71,7 +73,11 @@ class ProfileController extends Controller
         return redirect()->back()->with("Profile updated");
     }
 
-    public function socialLinkUpdate(Request $request){
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function socialLinkUpdate(Request $request): \Illuminate\Http\RedirectResponse{
         $request->validate([
             "facebook_link" => ["nullable", "url", "regex:/(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/m"],
             "github_link" => ["nullable", "url", "regex:/(?:(?:http|https):\/\/)?(?:www.)?github.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/m"],
@@ -89,6 +95,10 @@ class ProfileController extends Controller
         return redirect()->back()->with("message", "Updated social links");
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function emailUpdate(Request $request){
         $request->validate([
             "email" => "email|required"
