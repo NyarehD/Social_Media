@@ -8,14 +8,6 @@
                         @csrf
                         <h3 class="card-title text-center text-primary font-weight-bold">Add Post</h3>
                         <div class="mb-2">
-                            <label for="title" class="h3">Title</label>
-                            <input type="text" id="title" class="form-control @error("title") is-invalid @enderror"
-                                   name="title" value="{{ old("title") }}">
-                            @error("title")
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="mb-2">
                             <label for="description" class="h3">Description</label>
                             <textarea name="description" id="description" cols="30" rows="10"
                                       class="form-control @error("title") is-invalid @enderror">{{ old("description") }}</textarea>

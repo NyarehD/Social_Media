@@ -10,17 +10,9 @@
                         @method("put")
                         <h3 class="card-title text-center text-primary font-weight-bold">Edit Post</h3>
                         <div class="mb-2">
-                            <label for="title" class="h3">Title</label>
-                            <input type="text" id="title" class="form-control @error("title") is-invalid @enderror"
-                                   name="title" value="{{ (old("title"))?old("title"):$post->title }}">
-                            @error("title")
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="mb-2">
                             <label for="description" class="h3">Description</label>
                             <textarea name="description" id="description" cols="30" rows="10"
-                                      class="form-control @error("title") is-invalid @enderror">{{ (old("description"))?old("description"):$post->description }}</textarea>
+                                      class="form-control @error("description") is-invalid @enderror">{{ (old("description"))?old("description"):$post->description }}</textarea>
                             @error("description")
                             <span class="text-danger">{{ $message }}</span>
                             @enderror

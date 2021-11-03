@@ -33,12 +33,10 @@ class PostController extends Controller
         }
 
         $request->validate([
-            "title" => "required|string|min:4|max:255",
-            "description" => "required|string|min:10|",
+            "description" => "nullable|string",
             "post-img.*" => "mimetypes:image/jpeg,image/png"
         ]);
         $post = new Post();
-        $post->title = $request->title;
         $post->description = $request->description;
         $post->user_id = Auth::id();
         $post->save();
@@ -64,14 +62,12 @@ class PostController extends Controller
      */
     public function share(Request $request, Post $post){
         $request->validate([
-            "title" => "nullable|string",
             "description" => "nullable|string"
         ]);
         if (Gate::allows("is_original", $post)) {
             $newPost = new Post();
             $newPost->user_id = Auth::id();
             $newPost->original_post_id = $post->id;
-            $newPost->title = $request->title;
             $newPost->description = $request->description;
             $newPost->save();
             return redirect()->back()->with("message", "Shared successfully");
@@ -110,11 +106,9 @@ class PostController extends Controller
             }
 
             $request->validate([
-                "title" => "required|string|min:4|max:255",
                 "description" => "required|string|min:10|",
                 "post-img.*" => "mimetypes:image/jpeg,image/png"
             ]);
-            $post->title = $request->title;
             $post->description = $request->description;
             $post->user_id = Auth::id();
             $post->update();
@@ -141,9 +135,8 @@ class PostController extends Controller
                 $toDelete = $post->images->pluck("id");
                 PostPhoto::destroy($toDelete);
             }
-            $title = $post->title;
             $post->delete();
-            return redirect()->route("newsfeed")->with("status", "$title is deleted");
+            return redirect()->route("newsfeed")->with("status", "Post is deleted");
         }
         return abort(403);
     }
