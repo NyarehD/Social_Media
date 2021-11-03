@@ -97,7 +97,6 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <h5>{{ $post->title }}</h5>
                             <p>{{ $post->description }}</p>
                         </div>
                     </div>
@@ -157,12 +156,6 @@
                                                       id="share{{$post->id}}"
                                                       method="post">
                                                     @csrf
-                                                    <div class="form-group">
-                                                        <label for="title" class="h3 float-left">Title</label>
-                                                        <input type="text" class="form-control"
-                                                               name="title">
-
-                                                    </div>
                                                     <div class="form-group">
                                                         <label for="description"
                                                                class="h3 float-left">Description</label>
@@ -308,15 +301,6 @@
 <script>
     $(document).ready(function () {
         $(".toast").toast("show");
-        $(".comment-button").click(function (el) {
-            let currentCommentId = $(this).attr("data-comment-id");
-            let input = $("#comment-edit-input")
-            let commentText = $(`#comment-text-${currentCommentId}`);
-            console.log(commentText.innerText)
-            input.val(commentText.innerHTML);
-            commentText.toggle();
-            input.insertAfter(`#comment-text-${currentCommentId}`)
-        })
     })
 </script>
 </body>
