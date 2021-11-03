@@ -1,6 +1,6 @@
 <div class="card post mb-3" id="{{ $post->id }}">
     <x-post-profile-detail :post=$post></x-post-profile-detail>
-    {{--                        Show the post description--}}
+    {{--  Show the post description--}}
     <div class="card-body py-1">
         @isset($post->description)
             <p class="">{{$post->description}}</p>
@@ -40,7 +40,7 @@
             </div>
         @endif
     @endempty
-    {{--                        If the post is shared post, show the original post details--}}
+    {{--  If the post is shared post, show the original post details--}}
     @isset($post->original_post_id)
         <div class="card mx-2 mb-2 rounded-bottom">
             <x-post-profile-detail :post="$post->original_post"></x-post-profile-detail>
@@ -84,14 +84,15 @@
                     <i class="far fa-lg fa-comment-alt mr-2"></i>{{ $post->comments->count() }}  {{ $post->comments->count()>1?"Comments": "Comment"}}
                 </a>
             </div>
+            {{-- If the post is original_post, add the button to share post--}}
             @empty($post->original_post)
                 <div class="col-4 text-center">
-                    <!-- Button trigger modal-->
+                    <!-- Button trigger share modal-->
                     <button type="button" class="btn w-100" data-toggle="modal"
                             data-target="#shareModal{{$post->id}}">
                         <i class="fas fa-lg fa-share mr-2"></i> Share
                     </button>
-                    <!-- Modal -->
+                    <!-- Share Modal -->
                     <div class="modal fade" id="shareModal{{$post->id}}" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -109,12 +110,6 @@
                                           id="share{{$post->id}}"
                                           method="post">
                                         @csrf
-                                        <div class="form-group">
-                                            <label for="title" class="h3 float-left">Title</label>
-                                            <input type="text" class="form-control"
-                                                   name="title">
-
-                                        </div>
                                         <div class="form-group">
                                             <label for="description"
                                                    class="h3 float-left">Description</label>

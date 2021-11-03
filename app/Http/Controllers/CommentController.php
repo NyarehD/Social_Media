@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 class CommentController extends Controller
 {
     public function index(){
-        //
     }
 
     public function create(){
@@ -31,7 +30,6 @@ class CommentController extends Controller
     }
 
     public function show(Comment $comment){
-        //
     }
 
     public function edit(Comment $comment){
