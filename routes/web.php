@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GithubController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -17,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', "PostController@index")->name("newsfeed");
-
+Route::get("/auth/github", [GithubController::class, "redirect"])->name("github.redirect");
+Route::get("/auth/github/callback", [GithubController::class, "callback"])->name("github.callback");
 Auth::routes();
 
 Route::middleware("auth")->group(function(){

@@ -35,16 +35,16 @@ class PostController extends Controller
             // For saving names of saved images
             $fileNameArr = [];
             // Saving images in storage
-            foreach ($request->file("post - img .*") as $file) {
-                $newName = uniqid() . "_post - img . " . $file->getClientOriginalExtension();
+            foreach ($request->file("post-img.*") as $file) {
+                $newName = uniqid() . "_post-img." . $file->getClientOriginalExtension();
                 array_push($fileNameArr, $newName);
                 $file->storeAs('public/post', $newName);
             }
         }
 
         $request->validate([
-            "description" => "nullable | string",
-            "post - img .*" => "mimetypes:image / jpeg,image / png"
+            "description" => "nullable|string",
+            "post-img.*" => "mimetypes:image/jpeg,image/png"
         ]);
         $post = new Post();
         $post->description = $request->description;
@@ -78,7 +78,7 @@ class PostController extends Controller
      */
     public function share(Request $request, Post $post): \Illuminate\Http\RedirectResponse{
         $request->validate([
-            "description" => "nullable | string"
+            "description" => "nullable|string"
         ]);
         if (Gate::allows("is_original", $post)) {
             $newPost = new Post();
@@ -97,7 +97,7 @@ class PostController extends Controller
      */
     public function edit(Post $post){
         if (Gate::allows("post_owner", $post)) {
-            return view("post . edit", [
+            return view("post.edit", [
                 "post" => $post
             ]);
         }
@@ -106,24 +106,24 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post){
         if (Gate::allows("post_owner", $post)) {
-            if ($request->hasFile("post - img .*")) {
+            if ($request->hasFile("post-img.*")) {
                 $fileNameArr = [];
-                foreach ($request->file("post - img .*") as $file) {
-                    $newName = uniqid() . "_post - img . " . $file->getClientOriginalExtension();
+                foreach ($request->file("post-img.*") as $file) {
+                    $newName = uniqid() . "_post-img." . $file->getClientOriginalExtension();
                     array_push($fileNameArr, $newName);
                     $file->storeAs('public/post', $newName);
                 }
                 // Deleting previous photos
                 foreach ($post->images as $image) {
-                    Storage::delete("public/post / " . $image->filename);
+                    Storage::delete("public/post/" . $image->filename);
                 }
                 $toDelete = $post->images->pluck("id");
                 PostPhoto::destroy($toDelete);
             }
 
             $request->validate([
-                "description" => "required | string | min:10 | ",
-                "post - img .*" => "mimetypes:image / jpeg,image / png"
+                "description" => "required|string|min:10",
+                "post-img.*" => "mimetypes:image/jpeg,image/png"
             ]);
             $post->description = $request->description;
             $post->user_id = Auth::id();
