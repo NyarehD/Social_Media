@@ -20,6 +20,7 @@ class GithubController extends Controller
             $searchUser = User::where("github_id", $socialite->id)->first();
             if ($searchUser) {
                 Auth::login($searchUser);
+                return redirect("/");
             } else {
                 $newUser = User::create([
                     "name" => $user["name"],

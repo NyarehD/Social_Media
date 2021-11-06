@@ -18,9 +18,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', "PostController@index")->name("newsfeed");
+
+// Authentications
+Auth::routes();
+// Authentications with Github
 Route::get("/auth/github", [GithubController::class, "redirect"])->name("github.redirect");
 Route::get("/auth/github/callback", [GithubController::class, "callback"])->name("github.callback");
-Auth::routes();
 
 Route::middleware("auth")->group(function(){
     // Post
