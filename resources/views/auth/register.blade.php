@@ -78,10 +78,10 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div class="row justify-content-start">
+                            <div class="col-md-5">
                                 <a class="btn btn-secondary btn-lg" href="{{ route('github.redirect') }}"><i
-                                        class="fab fa-github"></i> Sign in with Github
+                                        class="fab fa-github"></i> Sign up with Github
                                 </a>
                             </div>
                         </div>
