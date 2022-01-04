@@ -196,10 +196,10 @@
                             @foreach($post->comments as $comment)
                                 <div class="row h-auto mb-2 comment" id="comment-{{$comment->id}}">
                                     <div class="col-3 p-0 pl-3">
-                                        <a href="{{ route('profile',$comment->owner->id) }}"
+                                        <a href="{{ route('profile',$comment->user_id) }}"
                                            class="d-flex justify-content-start">
                                             <img
-                                                src="{{asset("storage/profile-picture/".$comment->owner->profile_picture) }}"
+                                                src="{{asset("storage/profile-picture/".$comment->comment_owner->profile_picture) }}"
                                                 alt=""
                                                 class="comment-profile-img h-100 rounded-pill">
                                         </a>
@@ -207,10 +207,10 @@
                                     <div class="col-9 px-0 pr-3">
                                         <div class="">
                                             <a class="mb-0 font-weight-bold"
-                                               href="{{ route('profile',$comment->owner->id) }}">{{ $comment->owner->name}}</a>
+                                               href="{{ route('profile',$comment->comment_owner->id) }}">{{ $comment->comment_owner->name}}</a>
                                             <p class="mb-0"
                                                id="comment-text-{{$comment->id}}">{{ $comment->comment }}</p>
-                                            @if(Auth::id()==$comment->owner->id)
+                                            @if(Auth::id()==$comment->comment_owner->id)
                                                 <div class="text-right comment-options">
                                                     <!-- Button trigger modal for editing comment-->
                                                     <button type="button"
