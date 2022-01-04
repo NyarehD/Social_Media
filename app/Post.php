@@ -30,4 +30,7 @@ class Post extends Model
         return $this->hasMany(Comment::class, "post_id");
     }
 
+    public function comment_owner(){
+        return $this->hasManyThrough(User::class, Comment::class, "user_id", "id");
+    }
 }

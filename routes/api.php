@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\PostApiController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post("register", [RegisterController::class, "register"]);
+Route::prefix("posts")->group(function(){
+    Route::get("", [PostApiController::class, "index"]);
+    Route::get("/{post}", [PostApiController::class, "show"]);
+    Route::post("", [PostApiController::class, "store"]);
+    Route::put("/{post}", [PostApiController::class, "update"]);
+    Route::delete("/{post}", [PostApiController::class, "destroy"]);
 });
