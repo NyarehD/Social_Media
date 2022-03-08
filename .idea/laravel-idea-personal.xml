@@ -9,5 +9,10 @@
         <entry key="createResourceController.apiOnly" value="1" />
       </map>
     </option>
+    <option name="helperCode">
+      <LaravelHelperCodeSettings>
+        <option name="modelsDatabaseMetaSource" value="migrations" />
+      </LaravelHelperCodeSettings>
+    </option>
   </component>
 </project>

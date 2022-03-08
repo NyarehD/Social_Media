@@ -114,7 +114,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <label class="card-title h4" for="email">Update Email</label>
-                                <form action="{{ route('profile.emailUpdate') }}" class="" method="post"
+                                <form action="{{ route('profile.emailUpdate') }}" class="mb-3   " method="post"
                                       id="emailUpdate">
                                     @csrf
                                     <div class="input-group mb-3">

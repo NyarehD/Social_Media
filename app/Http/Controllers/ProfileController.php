@@ -14,26 +14,17 @@ use Illuminate\Support\Facades\Storage;
 
 use Image;
 
-class ProfileController extends Controller
-{
-    /**
-     * @param $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index($id){
+class ProfileController extends Controller {
+    public function index($id) {
         $user = User::find($id);
-        $post_by_user = Post::where("user_id", $id)->when(request()->search, function($query){
+        $post_by_user = Post::where("user_id", $id)->when(request()->search, function ($query) {
             $search_key = request()->search;
             return $query->where("title", "LIKE", "%$search_key%")->orWhere("description", "LIKE", "%$search_key%");
         })->latest()->get();
         return view('profile.index', compact("user", "post_by_user"));
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function pictureUpdate(Request $request){
+    public function profilePictureUpdate(Request $request) {
         $request->validate([
             "profile_picture" => "required|mimetypes:image/jpeg,image/png|file|max:2500"
         ]);
@@ -56,12 +47,7 @@ class ProfileController extends Controller
         return redirect()->back()->with("message", "Profile picture is updated");
     }
 
-    /**
-     * Updating name and bio
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function profileUpdate(Request $request){
+    public function profileUpdate(Request $request) {
         $request->validate([
             "name" => "required|string|min:1|max:100",
             "bio" => "required|string|min:10|max:255"
@@ -73,11 +59,7 @@ class ProfileController extends Controller
         return redirect()->back()->with("Profile updated");
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function socialLinkUpdate(Request $request): \Illuminate\Http\RedirectResponse{
+    public function socialLinkUpdate(Request $request): \Illuminate\Http\RedirectResponse {
         $request->validate([
             "facebook_link" => ["nullable", "url", "regex:/(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/m"],
             "github_link" => ["nullable", "url", "regex:/(?:(?:http|https):\/\/)?(?:www.)?github.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/m"],
@@ -95,11 +77,7 @@ class ProfileController extends Controller
         return redirect()->back()->with("message", "Updated social links");
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function emailUpdate(Request $request){
+    public function emailUpdate(Request $request) {
         $request->validate([
             "email" => "email|required"
         ]);
@@ -112,7 +90,7 @@ class ProfileController extends Controller
         return redirect()->back()->with("message", "New email is the same as previous email");
     }
 
-    public function passwordUpdate(Request $request){
+    public function passwordUpdate(Request $request) {
         $request->validate([
             "current_password" => ["required", new MatchOldPasswordRule()],
             "new_password" => "required|min:8|different:current_password",

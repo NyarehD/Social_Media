@@ -6,8 +6,8 @@
             <p class="">{{$post->description}}</p>
         @endisset
     </div>
-    {{--If the post is a original post, show the photoes of the post--}}
-    {{-- If not, show the photos of the original post --}}
+    {{--If the post is a original post, show the photos of the post--}}
+    {{-- Else, show the photos of the original post --}}
     @empty($post->original_post_id)
         {{--        Checked with equal to not show the when there is not photo for post--}}
         @if(count($post->post_photos)==1)
@@ -25,10 +25,12 @@
             </div>
         @endif
     @else
+        {{-- For only one photo --}}
         @if(count($post->original_post->post_photos)==1)
             <img class="card-img-top"
                  src="{{ asset("storage/post/".$post->original_post->post_photos[0]->filename) }}"
                  alt="Card image cap">
+            {{-- For two or more photos --}}
         @elseif(count($post->original_post->post_photos)>1)
             <div class="post-carousel">
                 @foreach($post->original_post->post_photos as $image)
