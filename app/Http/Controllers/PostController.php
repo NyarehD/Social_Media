@@ -10,18 +10,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
-class PostController extends Controller
-{
+class PostController extends Controller {
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(){
+    public function index() {
         return view("newsfeed", [
             "posts" => Post::latest()->get(),
         ]);
     }
 
-    public function create(){
+    public function create() {
         return view("post.create");
     }
 
@@ -29,7 +28,7 @@ class PostController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request): \Illuminate\Http\RedirectResponse{
+    public function store(Request $request): \Illuminate\Http\RedirectResponse {
         // Validating the uploaded images
         if ($request->hasFile("post-img.*")) {
             // For saving names of saved images
@@ -66,9 +65,8 @@ class PostController extends Controller
      * @param Post $post
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Post $post){
+    public function show(Post $post) {
         $post->with(["comment_owner", "Comment.comments"]);
-        return $post;
         return view("post.show", compact('post'));
     }
 
@@ -78,7 +76,7 @@ class PostController extends Controller
      * @param Post $post
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function share(Request $request, Post $post): \Illuminate\Http\RedirectResponse{
+    public function share(Request $request, Post $post): \Illuminate\Http\RedirectResponse {
         $request->validate([
             "description" => "nullable|string"
         ]);
@@ -97,7 +95,7 @@ class PostController extends Controller
      * @param Post $post
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
      */
-    public function edit(Post $post){
+    public function edit(Post $post) {
         if (Gate::allows("post_owner", $post)) {
             return view("post.edit", [
                 "post" => $post
@@ -106,7 +104,7 @@ class PostController extends Controller
         return abort(403);
     }
 
-    public function update(Request $request, Post $post){
+    public function update(Request $request, Post $post) {
         if (Gate::allows("post_owner", $post)) {
             if ($request->hasFile("post-img.*")) {
                 $fileNameArr = [];
@@ -144,7 +142,7 @@ class PostController extends Controller
         return abort(403);
     }
 
-    public function destroy(Post $post){
+    public function destroy(Post $post) {
         if (Gate::allows("post_owner", $post)) {
             if (isset($post->images)) {
                 foreach ($post->images as $image) {
