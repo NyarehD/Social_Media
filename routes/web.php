@@ -21,7 +21,7 @@ Route::get('/', "PostController@index")->name("newsfeed");
 
 // Authentications
 Auth::routes();
-// Authentications with Github
+// Authentications with GitHub
 Route::get("/auth/github", [GithubController::class, "redirect"])->name("github.redirect");
 Route::get("/auth/github/callback", [GithubController::class, "callback"])->name("github.callback");
 
@@ -29,10 +29,13 @@ Route::middleware("auth")->group(function () {
     // Post
     Route::resource("/post", "PostController");
     Route::post("/post/{post}/share", [PostController::class, "share"])->name("post.share");
-    Route::resource("/comment", "CommentController");
+
     // Post like
     Route::post("/like", [LikesController::class, "like"])->name("like.like");
     Route::post("/unlike", [LikesController::class, "unlike"])->name("like.unlike");
+
+    // Comment
+    Route::resource("/comment", "CommentController");
 
     Route::prefix("/profile")->group(function () {
         Route::get('/id/{id}', "ProfileController@index")->name("profile");
