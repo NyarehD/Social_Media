@@ -29,12 +29,11 @@ class ProfileController extends Controller {
             "profile_picture" => "required|mimetypes:image/jpeg,image/png|file|max:2500"
         ]);
         $dir = "public/profile-picture/";
-
         if (Auth::user()->profile_picture != "default-profile.jpg") {
             Storage::delete($dir . Auth::user()->profile_picture);
         }
-
         $newName = uniqid() . "_profile-picture." . $request->file("profile_picture")->getClientOriginalExtension();
+
         // Using intervention packages to resize profile image to 350px
         $img = Image::make($request->file("profile_picture"));
         $img->fit(350);
@@ -66,7 +65,7 @@ class ProfileController extends Controller {
             "twitter_link" => ["nullable", "url", "regex:/(?:(?:http|https):\/\/)?(?:www.)?twitter.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/m"]
         ], [
             "facebook_link.*" => "Facebook link is invalid",
-            "github_link" => "Github link is invalid",
+            "github_link.*" => "Github link is invalid",
             "twitter_link.*" => "Twitter link is invalid"
         ]);
         $user = Auth::user();
@@ -85,7 +84,7 @@ class ProfileController extends Controller {
         $user->email = $request->email;
         if ($user->isDirty("email")) {
             $user->update();
-            return redirect()->back()->with("message", "Updated Email");
+            return redirect()->back()->with("message", "Emaile updated");
         }
         return redirect()->back()->with("message", "New email is the same as previous email");
     }

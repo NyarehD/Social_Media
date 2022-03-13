@@ -7,20 +7,18 @@ use Auth;
 use Exception;
 use Socialite;
 
-class GithubController extends Controller
-{
-    public function redirect(){
+class GithubController extends Controller {
+    public function redirect() {
         return Socialite::driver("github")->redirect();
     }
 
-    public function callback(){
+    public function callback() {
         try {
             $socialite = Socialite::driver("github")->stateless()->user();
             $user = $socialite->user;
-            $searchUser = User::where("github_id", $socialite->id)->first();
-            if ($searchUser) {
-                Auth::login($searchUser);
-                return redirect("/");
+            $searchedUser = User::where("github_id", $socialite->id)->first();
+            if ($searchedUser) {
+                Auth::login($searchedUser);
             } else {
                 $newUser = User::create([
                     "name" => $user["name"],
@@ -29,8 +27,8 @@ class GithubController extends Controller
                     "github_link" => $user["html_url"]
                 ]);
                 Auth::login($newUser);
-                return redirect("/");
             }
+            return redirect("/");
         } catch (Exception $e) {
             return $e->getMessage();
         }
