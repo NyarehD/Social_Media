@@ -66,7 +66,6 @@ class PostController extends Controller {
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Post $post) {
-        $post->with(["comment_owner", "Comment.comments"]);
         return view("post.show", compact('post'));
     }
 
