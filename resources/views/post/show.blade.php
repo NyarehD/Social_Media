@@ -199,7 +199,7 @@
                                         <a href="{{ route('profile',$comment->user_id) }}"
                                            class="d-flex justify-content-start">
                                             <img
-                                                src="{{asset("storage/profile-picture/".$comment->user_id) }}"
+                                                src="{{asset("storage/profile-picture/".$comment->comment_owner->profile_picture) }}"
                                                 alt=""
                                                 class="comment-profile-img h-100 rounded-pill">
                                         </a>

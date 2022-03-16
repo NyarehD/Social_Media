@@ -26,6 +26,7 @@ class Post extends Model {
     }
 
     public function comments() {
-        return $this->hasMany(Comment::class, "post_id");
+        $comments = $this->hasMany(Comment::class, "post_id")->with("comment_owner");
+        return $comments;
     }
 }
