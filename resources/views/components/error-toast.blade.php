@@ -1,6 +1,4 @@
-<div role="alert" aria-live="assertive" aria-atomic="true"
-     class="toast fixedToast"
-     data-autohide="false">
+<div role="alert" aria-live="assertive" aria-atomic="true" class="toast fixedToast" data-autohide="false">
     <div class="toast-header">
         <strong>{{ $message}}</strong>
         <button type="button" class="ml-2 mb-1 close"

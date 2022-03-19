@@ -4,6 +4,7 @@ use App\Http\Controllers\GithubController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\View\Components\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
