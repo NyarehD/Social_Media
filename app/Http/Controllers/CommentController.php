@@ -8,15 +8,14 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CommentController extends Controller
-{
-    public function index(){
+class CommentController extends Controller {
+    public function index() {
     }
 
-    public function create(){
+    public function create() {
     }
 
-    public function store(Request $request){
+    public function store(Request $request) {
         $request->validate([
             "comment" => "string",
             "post_id" => [new PostExistsRule()]
@@ -29,20 +28,20 @@ class CommentController extends Controller
         return redirect()->back();
     }
 
-    public function show(Comment $comment){
+    public function show(Comment $comment) {
     }
 
-    public function edit(Comment $comment){
+    public function edit(Comment $comment) {
         return $comment;
     }
 
-    public function update(Request $request, Comment $comment){
+    public function update(Request $request, Comment $comment) {
         $comment->comment = $request->edited_comment;
         $comment->update();
         return redirect()->back()->with("message", "Comment Updated");
     }
 
-    public function destroy(Comment $comment){
+    public function destroy(Comment $comment) {
         if (Gate::allows("comment_owner", $comment)) {
             $comment->delete();
             return back()->with("message", "Comment Deleted");
