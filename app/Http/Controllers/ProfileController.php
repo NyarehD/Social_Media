@@ -52,8 +52,8 @@ class ProfileController extends Controller {
             "bio" => "required|string|min:10|max:255"
         ]);
         $user = Auth::user();
-        $user->name = $request->name;
-        $user->bio = $request->bio;
+        $user->name = $request['name'];
+        $user->bio = $request['bio'];
         $user->update();
         return redirect()->back()->with("Profile updated");
     }
@@ -69,9 +69,9 @@ class ProfileController extends Controller {
             "twitter_link.*" => "Twitter link is invalid"
         ]);
         $user = Auth::user();
-        $user->facebook_link = $request->facebook_link;
-        $user->twitter_link = $request->twitter_link;
-        $user->github_link = $request->github_link;
+        $user->facebook_link = $request['facebook_link'];
+        $user->twitter_link = $request['twitter_link'];
+        $user->github_link = $request['github_link'];
         $user->update();
         return redirect()->back()->with("message", "Updated social links");
     }
@@ -81,10 +81,10 @@ class ProfileController extends Controller {
             "email" => "email|required"
         ]);
         $user = Auth::user();
-        $user->email = $request->email;
+        $user->email = $request['email'];
         if ($user->isDirty("email")) {
             $user->update();
-            return redirect()->back()->with("message", "Emaile updated");
+            return redirect()->back()->with("message", "Email updated");
         }
         return redirect()->back()->with("message", "New email is the same as previous email");
     }
@@ -96,7 +96,7 @@ class ProfileController extends Controller {
             "confirm_password" => "required|same:new_password|min:8"
         ]);
         $user = Auth::user();
-        $user->password = Hash::make($request->new_password);
+        $user->password = Hash::make($request['new_password']);
         $user->update();
         return redirect()->back()->with("message", "Password is updated");
     }

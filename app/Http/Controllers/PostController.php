@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller {
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function index() {
         return view("newsfeed", [
             "posts" => Post::latest()->get(),
@@ -24,10 +21,6 @@ class PostController extends Controller {
         return view("post.create");
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request): \Illuminate\Http\RedirectResponse {
         // Validating the uploaded images
         if ($request->hasFile("post-img.*")) {
@@ -46,7 +39,7 @@ class PostController extends Controller {
             "post-img.*" => "mimetypes:image/jpeg,image/png"
         ]);
         $post = new Post();
-        $post->description = $request->description;
+        $post->description = $request['description'];
         $post->user_id = Auth::id();
         $post->save();
         // Saving the saved photo in database records
@@ -61,20 +54,10 @@ class PostController extends Controller {
         return redirect()->route("newsfeed")->with("message", "Post Created");
     }
 
-    /**
-     * @param Post $post
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function show(Post $post) {
         return view("post.show", compact('post'));
     }
 
-    /**
-     * For sharing posts
-     * @param Request $request
-     * @param Post $post
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function share(Request $request, Post $post): \Illuminate\Http\RedirectResponse {
         $request->validate([
             "description" => "nullable|string"
@@ -83,17 +66,13 @@ class PostController extends Controller {
             $newPost = new Post();
             $newPost->user_id = Auth::id();
             $newPost->original_post_id = $post->id;
-            $newPost->description = $request->description;
+            $newPost->description = $request['description'];
             $newPost->save();
             return redirect()->back()->with("message", "Shared successfully");
         }
         return redirect()->back()->with("message", "You cannot not share a shared post");
     }
 
-    /**
-     * @param Post $post
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
-     */
     public function edit(Post $post) {
         if (Gate::allows("post_owner", $post)) {
             return view("post.edit", [
@@ -124,7 +103,7 @@ class PostController extends Controller {
                 "description" => "required|string|min:10",
                 "post-img.*" => "mimetypes:image/jpeg,image/png"
             ]);
-            $post->description = $request->description;
+            $post->description = $request['description'];
             $post->user_id = Auth::id();
             $post->update();
 

@@ -22,9 +22,9 @@ class CommentController extends Controller
             "post_id" => [new PostExistsRule()]
         ]);
         $comment = new Comment();
-        $comment->post_id = $request->post_id;
+        $comment->post_id = $request['post_id'];
         $comment->user_id = Auth::id();
-        $comment->comment = $request->comment;
+        $comment->comment = $request['comment'];
         $comment->save();
         return redirect()->back();
     }
