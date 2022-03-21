@@ -260,13 +260,13 @@
                                                         </div>
                                                     </div>
                                                     <button class="text-black-50 btn btn-link"
-                                                            form="del{{$comment->id}}"
+                                                            form="delCom{{$comment->id}}"
                                                             onclick="return confirm('Are you sure you want to delete this comment?')">
-                                                        Delete
+                                                        Delete me
                                                     </button>
-                                                    <form action="{{ route('comment.destroy',$comment->id) }}"
+                                                    <form action="{{route("comment.destroy",$comment->id)}}"
                                                           class="d-none"
-                                                          id="del{{$comment->id}}" method="post">
+                                                          id="delCom{{$comment->id}}" method="post">
                                                         @csrf
                                                         @method("delete")
                                                     </form>
