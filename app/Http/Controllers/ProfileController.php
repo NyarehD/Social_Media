@@ -35,9 +35,7 @@ class ProfileController extends Controller {
         $newName = uniqid() . "_profile-picture." . $request->file("profile_picture")->getClientOriginalExtension();
 
         // Using intervention packages to resize profile image to 350px
-        $img = Image::make($request->file("profile_picture"));
-        $img->fit(350);
-        $img->save("storage/profile-picture/" . $newName);
+        Image::make($request->file("profile_picture"))->fit(350)->save("storage/profile-picture/" . $newName);
 
         $user = User::find(Auth::id());
         $user->profile_picture = $newName;
