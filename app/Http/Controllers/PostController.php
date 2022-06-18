@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Post;
-use App\PostPhoto;
+use Illuminate\Support\Facades\Auth;
 use App\User;
-use Auth;
+use App\PostPhoto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -62,6 +62,7 @@ class PostController extends Controller {
         $request->validate([
             "description" => "nullable|string"
         ]);
+
         if (Gate::allows("is_original", $post)) {
             $newPost = new Post();
             $newPost->user_id = Auth::id();

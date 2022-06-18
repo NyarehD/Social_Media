@@ -2,9 +2,11 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model {
+    use HasFactory;
     protected $fillable = ["title", "description"];
 
     public $with = ["owner", "original_post", "post_photos", "total_likes", "comments"];

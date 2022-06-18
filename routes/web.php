@@ -4,7 +4,7 @@ use App\Http\Controllers\GithubController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
-use App\View\Components\Post;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,7 +37,6 @@ Route::middleware("auth")->group(function () {
 
     // Comment
     Route::resource("/comment", "CommentController");
-
     Route::prefix("/profile")->group(function () {
         Route::get('/id/{id}', "ProfileController@index")->name("profile");
         Route::prefix("/edit")->group(function () {

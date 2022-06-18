@@ -38,7 +38,7 @@
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control @error('name') is-invalid @enderror "
                                                     id="name" name="name" placeholder="Name"
-                                                    value="{{ old('name') ? old('name') : Auth::user()->name }}">
+                                                    value="{{ old('name') ? old('name') : Auth::user()->name}}">
                                                 @error('name')
                                                     <span class="text-danger w-100 d-block">{{ $message }}</span>
                                                 @enderror

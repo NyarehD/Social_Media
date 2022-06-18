@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller {
     public function index() {
+        $fruits = ['banana', 'pineapple', 'apple'];
+        $vegetables = 'carrot';
+        $isFruit = in_array($vegetables, $fruits);
+        return $isFruit;
     }
 
     public function create() {
